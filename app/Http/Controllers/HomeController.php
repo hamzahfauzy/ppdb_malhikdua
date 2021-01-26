@@ -220,8 +220,8 @@ class HomeController extends Controller
                 }
                 else
                 {
-                    $duitku = new Duitku;
-                    $result = $duitku->pay($amount, $request->tipe_pembayaran, [
+                    $duitku_pay = new Duitku;
+                    $result = $duitku_pay->pay($amount, $request->tipe_pembayaran, [
                         'name' => $request->nama_pendaftar,
                         'email' => $request->email,
                         'phone' => $request->no_wa
