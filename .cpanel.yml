@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/malhikdu/ppdb.malhikdua.sch.id/ppdb_malhikdua
+    - /bin/cp -r * $DEPLOYPATH
