@@ -23,8 +23,9 @@ Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 
 Route::match(['get', 'post'], 'daftar', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 // Route::match(['get', 'post'], 'tiket', [App\Http\Controllers\HomeController::class, 'tiket'])->name('formulir');
-Route::get('check', [App\Http\Controllers\HomeController::class, 'check'])->name('check');
+Route::match(['get', 'post'], 'check', [App\Http\Controllers\HomeController::class, 'check'])->name('check');
 Route::get('payment', [App\Http\Controllers\HomeController::class, 'paymentGateway'])->name('payment');
+Route::get('payment-success', [App\Http\Controllers\HomeController::class, 'paymentSuccess'])->name('payment-success');
 
 Route::middleware(['auth:staff'])->prefix('staff')->name('staff.')->group(function(){
     Route::get('/', [App\Http\Controllers\Staff\HomeController::class, 'index'])->name('index');

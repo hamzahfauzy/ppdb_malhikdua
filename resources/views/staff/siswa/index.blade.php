@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <a href="{{route('staff.siswa.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Buat Pendaftaran</a>
-                        <a href="" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>
+                        {{--<a href="" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>--}}
                     </div>
                     <div class="card-body login-card-body">
                         <table class="table table-bordered table-hover">
@@ -56,9 +56,9 @@
                                     <td>{{$s->diri->tanggal_lahir}}</td>
                                     <td><span class="badge badge-{{$labels[$s->status]}}">{{$s->status}}</span></td>
                                     <td>
-                                        <a href="{{route('staff.siswa.show',$s->id)}}" class="btn btn-sm btn-primary">Lihat</a>
-                                        <a href="{{route('staff.siswa.edit',$s->id)}}" class="btn btn-sm btn-warning">Edit</a>
-                                        <a href="{{route('staff.siswa.delete',$s->id)}}" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah anda yakin menghapus data pendaftaran ?')){return true}else{return false}">Hapus</a>
+                                        <a href="{{route('staff.siswa.show',$s->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                                        <a href="{{route('staff.siswa.edit',$s->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{route('staff.siswa.delete',$s->id)}}" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah anda yakin menghapus data pendaftaran ?')){return true}else{return false}"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <?php $i++ ?>

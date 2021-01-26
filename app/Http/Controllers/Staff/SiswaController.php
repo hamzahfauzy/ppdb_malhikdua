@@ -40,6 +40,81 @@ class SiswaController extends Controller
         return view('staff.siswa.create');
     }
 
+    public function edit($id)
+    {
+        $formulir = Formulir::findOrFail($id);
+        $labels = [
+            'diri' => [
+                'nama_lengkap',
+                'alamat',
+                'tempat_tinggal',
+                'tanggal_lahir',
+                'jenis_kelamin',
+                'NIK',
+                'anak_ke',
+                'jumlah_saudara',
+                'status'
+            ],
+            'asal' => [
+                'alamat',
+                'rt',
+                'rw',
+                'desa_kelurahan',
+                'kecamatan',
+                'kabupaten',
+                'provinsi',
+                'kode_pos'
+            ],
+            'ayah' => [
+                'no_kk',
+                'nama',
+                'no_kk_ayah',
+                'status',
+                'tanggal_lahir',
+                'keadaan',
+                'pekerjaan',
+                'pendidikan',
+                'penghasilan',
+            ],
+            'ibu' => [
+                'no_kk',
+                'nama',
+                'no_kk_ibu',
+                'status',
+                'tanggal_lahir',
+                'keadaan',
+                'pekerjaan',
+                'pendidikan',
+                'penghasilan',
+            ],
+            'wali' => [
+                'nama',
+                'NIK',
+                'hubungan_dengan_pendaftar',
+                'tanggal_lahir',
+                'pekerjaan',
+                'pendidikan',
+            ],
+            'pendidikan' => [
+                'NISN',
+                'sekolah_asal',
+                'NPSN',
+                'angkatan_lulus',
+                'alamat'
+            ],
+            'rencana' => [
+                'program','spesifikasi'
+            ],
+            'berkas' => [
+                'no_seri_shun',
+                'no_seri_ijazah',
+                'no_peserta_un',
+                'kartu_pemerintah',
+            ]
+        ];
+        return view('staff.siswa.edit',compact('formulir','labels'));
+    }
+
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -120,6 +195,69 @@ class SiswaController extends Controller
         return redirect('/staff/siswa')->with(['success'=>'Berhasil buat pendaftaran']);
     }
 
+    public function update(Request $request, $id)
+    {
+        $formulir = Formulir::findOrFail($id);
+        DB::beginTransaction();
+        try {
+
+            $rencana = $formulir->data_rencana_sekolah;
+            $diri = $formulir->data_diri;
+            $pendidikan = $formulir->data_pendidikan;
+            $asal = $formulir->alamat_asal;
+            $ayah = $formulir->ayah;
+            $ibu = $formulir->ibu;
+            if($formulir->wali)
+                $wali = $formulir->wali;
+            else
+                $wali = (new DataWali)->create(array_merge(['formulir_id' => $formulir->id], $request->post('wali')));
+            if (
+                $rencana->update($request->post('rencana')) &&
+                $diri->update($request->post('diri')) &&
+                $pendidikan->update($request->post('pendidikan')) &&
+                $asal->update($request->post('asal')) &&
+                $ayah->update($request->post('ayah')) &&
+                $ibu->update($request->post('ibu')) &&
+                $wali->update($request->post('wali'))
+            ) {
+                $berkas = $formulir->berkas_pendaftaran;
+                $berkas->update($request->post('berkas'));
+
+                if($request->file('upload_kk'))
+                {
+                    $kk = $request->file("upload_kk")->store("berkas");
+                    $berkas->update(['upload_kk' => $kk]);
+                }
+                if($request->file('upload_akte'))
+                {
+                    $kk = $request->file("upload_akte")->store("berkas");
+                    $berkas->update(['upload_akte' => $kk]);
+                }
+                if($request->file('upload_ijazah'))
+                {
+                    $kk = $request->file("upload_ijazah")->store("berkas");
+                    $berkas->update(['upload_ijazah' => $kk]);
+                }
+                if($request->file('upload_shun'))
+                {
+                    $kk = $request->file("upload_shun")->store("berkas");
+                    $berkas->update(['upload_shun' => $kk]);
+                }
+                if($request->file('upload_kartu_pemerintah'))
+                {
+                    $kk = $request->file("upload_kartu_pemerintah")->store("berkas");
+                    $berkas->update(['upload_kartu_pemerintah' => $kk]);
+                }
+                DB::commit();
+                return redirect('/staff/siswa/'.$formulir->id)->with(['success'=>'Berhasil edit pendaftaran']);
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
+        return redirect('/staff/siswa/'.$formulir->id)->with(['failed'=>'Gagal edit pendaftaran']);
+    }
+
 
     public function kelulusan()
     {
@@ -191,7 +329,8 @@ class SiswaController extends Controller
 
     function delete($id)
     {
-        Formulir::findOrFail($id)->delete();
+        $formulir = Formulir::findOrFail($id);
+        $formulir->contact->delete();
         return redirect('/staff/siswa')->with(['success'=>'Berhasil hapus pendaftaran']);
     }
 }

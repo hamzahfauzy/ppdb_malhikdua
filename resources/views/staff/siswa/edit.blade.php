@@ -1,17 +1,18 @@
-@extends('layouts.app')
-@section('title','Formulir Pendaftaran')
+@extends('layouts.staff')
+@section('title','Edit Formulir Pendaftaran')
 @section('content')
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Formulir</h1>
+                <h1 class="m-0 text-dark">Edit Pendaftaran</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                    <li class="breadcrumb-item active">Formulir</li>
+                    <li class="breadcrumb-item"><a href="/siswa">Pendaftaran</a></li>
+                    <li class="breadcrumb-item active">Edit Pendaftaran</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -25,9 +26,9 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" action="{{route('staff.siswa.update',$formulir->id)}}">
                 @csrf
-                <input type="hidden" name="contact_id" value="{{auth()->user()->contact->id}}">
+                @method('PUT')
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Data Rencana Sekolah</h3>
@@ -139,9 +140,7 @@
     $("input[name='rencana[program]']").change(initProgram)
 
     function initProgram(){
-
         var el = $("input[name='rencana[program]']")
-
         $("#fg-spf").removeClass("d-none")
 
         var fcBi = $("#fc-bi")

@@ -40,6 +40,11 @@
                         {{ $msg }}
                     </div>
                 @endif
+                @if ($msg = session('failed'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $msg }}
+                    </div>
+                @endif
                 <h4>Data Rencana Sekolah</h4>
                 <div class="row">
                     <div class="col-12 col-md-6">

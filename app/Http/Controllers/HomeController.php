@@ -7,6 +7,7 @@ use Dompdf\Dompdf;
 use Authy\AuthyApi;
 use Dompdf\Options;
 use App\Models\User;
+use App\Models\Duitku;
 use App\Models\Fonnte;
 use App\Models\Tripay;
 use App\Models\Contact;
@@ -138,6 +139,18 @@ class HomeController extends Controller
 
     public function welcome(Request $request)
     {
+        $duitku = [
+            'VC' => 'Credit Card (Visa / Master)',
+            'BK' => 'BCA KlikPay',
+            'M1' => 'Mandiri Virtual Account',
+            'BT' => 'Permata Bank Virtual Account',
+            'B1' => 'CIMB Niaga Virtual Account',
+            'A1' => 'ATM Bersama',
+            'I1' => 'BNI Virtual Account',
+            'VA' => 'Maybank Virtual Account',
+            'FT' => 'Ritel',
+            'OV' => 'OVO',
+        ];
         if ($request->isMethod('post')) {
 
             if($request->has('reset'))
@@ -149,7 +162,8 @@ class HomeController extends Controller
             }
             // check email and phone exists
             $check_contact = Contact::where('email',$request->email)->orwhere('no_wa',$request->no_wa)->exists();
-            if($check_contact)
+            $check_user = Contact::where('email',$request->no_wa)->exists();
+            if($check_contact || $check_user)
                 return redirect()->back()->with(['contact_exists' => 'Email atau No. Whatsapp sudah terdaftar']);
             
             $authy_api = new AuthyApi(getenv('AUTHY_KEY'));
@@ -161,13 +175,13 @@ class HomeController extends Controller
                 
                 $contact = new Contact();
                 $request->merge(['status'=>'']);
+                $amount = $request->biaya_pembayaran;
                 // bayar dulu
                 if($request->payment_gateway == 'tripay')
                 {
                     $privateKey = getenv('TRIPAY_PRIVATE_KEY');
                     $merchantCode = getenv('TRIPAY_MERCHANT_CODE');
                     $merchantRef = getenv('TRIPAY_MERCHANT_REF');
-                    $amount = $request->biaya_pembayaran;
                     
                     $signature = hash_hmac('sha256', $merchantCode.$merchantRef.$amount, $privateKey);
                     $data = [
@@ -206,6 +220,24 @@ class HomeController extends Controller
                 }
                 else
                 {
+                    $duitku = new Duitku;
+                    $result = $duitku->pay($amount, $request->tipe_pembayaran, [
+                        'name' => $request->nama_pendaftar,
+                        'email' => $request->email,
+                        'phone' => $request->no_wa
+                    ]);
+
+                    // return $result;
+
+                    $request->merge([
+                        'status' => $result['statusMessage'],
+                        'tiket' => '',
+                        'payment_gateway' => $duitku[$request->payment_gateway],
+                        'payment_reference' => $result['reference'],
+                        'payment_code' => $result['vaNumber'],
+                        'checkout_url' => $result['paymentUrl'],
+                        'expired_time' => '',
+                    ]);
 
                 }
 
@@ -228,9 +260,8 @@ class HomeController extends Controller
                         $wa = new Fonnte;
                         $wa->send_text("62".$contact->no_wa,$message);
 
-                        if($request->payment_gateway == 'tripay')
-                            return redirect()->to($nc->checkout_url);
-                        return;
+                        // if($request->payment_gateway == 'tripay')
+                        return redirect()->to($nc->checkout_url);
                     }
                 }
             } else {
@@ -276,19 +307,6 @@ class HomeController extends Controller
                 }
             }
         }
-        
-        $duitku = [
-            'VC' => 'Credit Card (Visa / Master)',
-            'BK' => 'BCA KlikPay',
-            'M1' => 'Mandiri Virtual Account',
-            'BT' => 'Permata Bank Virtual Account',
-            'B1' => 'CIMB Niaga Virtual Account',
-            'A1' => 'ATM Bersama',
-            'I1' => 'BNI Virtual Account',
-            'VA' => 'Maybank Virtual Account',
-            'FT' => 'Ritel',
-            'OV' => 'OVO',
-        ];
 
         $tripay = $this->paymentChannel();
 
@@ -526,6 +544,15 @@ class HomeController extends Controller
         $formulir->update([
             'status' => 'Dikirim'
         ]);
+        $wa = new Fonnte;
+        $message = "Selamat, Pendaftar atas nama";
+        $message .= "\nNama : ".$formulir->diri->nama_lengkap;
+        $message .= "\nKota : ".$formulir->asal->kabupaten;
+        $message .= "\nProgram : ".$formulir->rencana->program;
+        $message .= "\nSpesifikasi : ".$formulir->rencana->spesifikasi;
+        $message .= "\n\nFormulir anda berhasil dikirim";
+        $message .= "\n\nSilahkan check status pendaftaran pada ".route('check')." dengan kode formulir ".$formulir->kode_formulir;
+        $wa->send_text("62".$formulir->contact->no_wa,$message);
         return redirect('/home')->with(['success'=>'Formulir sudah di kirim']);
     }
 
@@ -544,5 +571,26 @@ class HomeController extends Controller
             return $this->isian();
         if($row == 'Faktur Pembayaran')
             return $this->faktur();
+    }
+
+    function check()
+    {
+        $labels = [
+            '' => '',
+            'Dikirim' => 'primary',
+            'Ditolak' => 'danger',
+            'Diterima' => 'success',
+            'Lulus' => 'success',
+            'Tidak Lulus' => 'danger',
+        ];
+        if (isset($_GET['kode'])) 
+        {
+            $kode = $_GET['kode'];
+            $formulir = Formulir::where('kode_formulir',$kode)->first();
+            if($formulir)
+                return view('check.found',compact('formulir','labels'));
+            return view('check.not-found',compact('kode'));
+        }
+        return view('check');
     }
 }
