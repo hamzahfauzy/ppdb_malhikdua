@@ -175,7 +175,7 @@ class HomeController extends Controller
                 
                 $contact = new Contact();
                 $request->merge(['status'=>'']);
-                $amount = $request->biaya_pembayaran;
+                $amount = $request->domisili == 'Warga Benda' || $request->alumni == 'Ya' ? 110000 : 135000;
                 // bayar dulu
                 if($request->payment_gateway == 'tripay')
                 {
