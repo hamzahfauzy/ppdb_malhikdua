@@ -229,11 +229,10 @@ class HomeController extends Controller
 
                     // return $result;
 
-                    $request->tipe_pembayaran = $duitku[$request->tipe_pembayaran];
-
                     $request->merge([
                         'status' => $result['statusMessage'],
                         'tiket' => '',
+                        'tipe_pembayaran' => $duitku[$request->tipe_pembayaran],
                         'payment_gateway' => $request->payment_gateway,
                         'payment_reference' => $result['reference'],
                         'payment_code' => $result['vaNumber'],
