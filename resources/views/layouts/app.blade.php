@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard</title>
+    <title>@yield('title','Dashboard')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -39,30 +39,6 @@
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -137,18 +113,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('pembayaran')}}" class="nav-link {{Request::is('pembayaran') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="{{route('formulir')}}" class="nav-link {{Request::is('formulir') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-file"></i>
                                 <p>
-                                    Pembayaran
+                                    Formulir
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('siswa')}}" class="nav-link {{Request::is('siswa') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="{{route('berkas')}}" class="nav-link {{Request::is('berkas') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-download"></i>
                                 <p>
-                                    Siswa
+                                    Download Berkas
                                 </p>
                             </a>
                         </li>
@@ -165,10 +141,10 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+            <strong>Copyright &copy; 2021 <a href="#">PPDB Malhikdua</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.0.5
+                <b>Version</b> 1.0.0
             </div>
         </footer>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>PPDB</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -13,14 +13,24 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <style>
+    .payment {
+        display: none;
+    }
+    body {
+        background-color: green;
+    }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" style="background-color: #FFF;margin-top:15px;">
         <form method="post" class="row">
             @csrf
             <div class="col-md-12 mt-5">
-                <h2>PPDB</h2>
+                <center>
+                    <img src="{{asset('images/faktur.png')}}" alt="" width="400px">
+                </center>
                 <div id="stepper1" class="bs-stepper">
                     <div class="bs-stepper-header">
                         <div class="step" data-target="#step-content-1">
@@ -48,22 +58,28 @@
                         <div id="step-content-1" class="content">
 
                             <div class="card card-body">
+                                @if(Session::has('contact_exists'))
+
+                                <span class="alert alert-danger">{{Session::get('contact_exists')}}</span>
+
+                                @endif
+
                                 @if(Session::has('sms'))
 
-                                <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert->danger'}}">{{Session::get('sms')->message()}}</span>
+                                <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">OTP sudah dikirim ke nomor HP anda. Silahkan cek nomor hp anda untuk mengetahui Kode OTP</span>
 
                                 @endif
 
                                 @if(Session::has('verification'))
 
-                                <span class="alert {{Session::get('verification')->ok() ? 'alert-success' : 'alert->danger'}}">{{Session::get('verification')->message()}}</span>
+                                <span class="alert {{Session::get('verification')->ok() ? 'alert-success' : 'alert-danger'}}">{{Session::get('verification')->message()}}</span>
                                 <input type="hidden" name="verificated" value="true">
 
                                 @endif
 
                                 <div class="form-group">
                                     <label for="">Nama Pendaftar</label>
-                                    <input type="text" name="nama_pendaftar" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class=" form-control">
+                                    <input type="text" name="nama_pendaftar" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class=" form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Nomor WA</label>
@@ -71,12 +87,12 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">+62</span>
                                         </div>
-                                        <input type="text" name="no_wa" value="{{Session::get('request') ? Session::get('request')['no_wa'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control">
+                                        <input type="text" name="no_wa" value="{{Session::get('request') ? Session::get('request')['no_wa'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="text" name="email" value="{{Session::get('request') ? Session::get('request')['email'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control">
+                                    <input type="text" name="email" value="{{Session::get('request') ? Session::get('request')['email'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
                                 </div>
                                 @if(Session::has('user_sms'))
                                 <div class="form-group">
@@ -94,6 +110,7 @@
                             @if(Session::has('sms'))
 
                             <button class="btn btn-primary">Verifikasi</button>
+                            <button name="reset" value="reset" class="btn btn-primary">Ulang</button>
 
                             @else
 
@@ -147,24 +164,39 @@
                             </div>
 
                             <hr>
-                            <button type="button" class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
                             <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
                         </div>
                         <div id="step-content-3" class="content">
 
                             <div class="card">
                                 <div class="card-header bg-info text-white d-flex justify-content-between">
-                                    <h5>Transfer Manual</h5>
+                                    <h5>Pembayaran</h5>
                                     <h5>Biaya : <b id="bp">Rp125.000,00</b></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="">Bank Tujuan</label>
+                                        <label for="">Payment Gateway</label>
+                                        <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
+                                            <option value="" selected disabled>- Pilih -</option>
+                                            <option value="duitku">DUITKU</option>
+                                            <option value="tripay">TRIPAY</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Metode Pembayaran</label>
                                         <select name="tipe_pembayaran" class="form-control">
-                                            <option value="-" selected disabled>- Pilih Bank -</option>
-                                            <option value="BCA">Bank BCA</option>
-                                            <option value="BRI">Bank BRI</option>
-                                            <option value="BNI">Bank BNI</option>
+                                            <option value="" selected>- Pilih -</option>
+                                            @foreach($duitku as $k => $v)
+                                            <option value="{{$k}}" class="payment duitku">{{$v}}</option>
+                                            @endforeach
+                                            @if(isset($tripay['data']))
+                                            @foreach($tripay['data'] as $k => $v)
+                                            @if(!$v['active'])
+                                            @continue
+                                            @endif
+                                            <option value="{{$v['code']}}" class="payment tripay">{{$v['name']}}</option>
+                                            @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <input type="hidden" name="biaya_pembayaran" value="125.000">
@@ -188,6 +220,9 @@
 
     <script>
         var stepper1 = new Stepper(document.querySelector('#stepper1'))
+        @if(Session::has('verification'))
+        stepper1.next()
+        @endif
 
         function checkPendaftar(el) {
             var pendaftar = $("input[name=nama_pendaftar]");
@@ -240,6 +275,13 @@
             }
 
             alamat.removeClass("d-none")
+        }
+
+        function showPaymentMethod(value)
+        {
+            document.querySelector('[name="tipe_pembayaran"]').value = ""
+            document.querySelectorAll('.payment').forEach(val => {val.style.display="none"})
+            document.querySelectorAll('.payment.'+value).forEach(val => {val.style.display="block"})
         }
     </script>
 </body>

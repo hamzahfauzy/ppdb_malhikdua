@@ -23,7 +23,7 @@ class CreateDataWalisTable extends Migration
             $table->string("pendidikan");
             $table->timestamps();
 
-            $table->foreign('formulir_id')->references('id')->on('formulirs');
+            $table->foreign('formulir_id')->references('id')->on('formulirs')->onDelete('cascade');
         });
     }
 

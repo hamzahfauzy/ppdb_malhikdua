@@ -10,4 +10,9 @@ class Contact extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    function formulir()
+    {
+        return $this->hasOne(Formulir::class);
+    }
 }

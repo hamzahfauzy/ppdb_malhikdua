@@ -27,7 +27,7 @@ class CreateDataDirisTable extends Migration
             $table->string('status');
             $table->timestamps();
 
-            $table->foreign('formulir_id')->references('id')->on('formulirs');
+            $table->foreign('formulir_id')->references('id')->on('formulirs')->onDelete('cascade');
         });
     }
 

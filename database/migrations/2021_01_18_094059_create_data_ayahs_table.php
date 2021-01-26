@@ -27,7 +27,7 @@ class CreateDataAyahsTable extends Migration
             $table->string('penghasilan');
             $table->timestamps();
 
-            $table->foreign('formulir_id')->references('id')->on('formulirs');
+            $table->foreign('formulir_id')->references('id')->on('formulirs')->onDelete('cascade');
         });
     }
 

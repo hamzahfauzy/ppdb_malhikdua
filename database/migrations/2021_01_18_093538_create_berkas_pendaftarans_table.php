@@ -27,7 +27,7 @@ class CreateBerkasPendaftaransTable extends Migration
             $table->string("upload_kartu_pemerintah");
             $table->timestamps();
 
-            $table->foreign('formulir_id')->references('id')->on('formulirs');
+            $table->foreign('formulir_id')->references('id')->on('formulirs')->onDelete('cascade');
         });
     }
 

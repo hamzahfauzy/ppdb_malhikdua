@@ -19,7 +19,9 @@ class CreateDataRencanaSekolahsTable extends Migration
             $table->string('program');
             $table->string('spesifikasi');
             $table->timestamps();
+            $table->foreign('formulir_id')->references('id')->on('formulirs')->onDelete('cascade');
         });
+
     }
 
     /**

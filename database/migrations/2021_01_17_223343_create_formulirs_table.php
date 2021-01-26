@@ -18,7 +18,7 @@ class CreateFormulirsTable extends Migration
             $table->bigInteger('contact_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 
