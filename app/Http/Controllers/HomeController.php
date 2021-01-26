@@ -265,6 +265,7 @@ class HomeController extends Controller
                         session()->forget('user_sms');
                         session()->forget('sms');
                         session()->forget('request');
+                        session()->forget('verification');
 
                         return redirect()->to($nc->checkout_url);
                     }
