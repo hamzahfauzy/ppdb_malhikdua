@@ -292,7 +292,7 @@ class SiswaController extends Controller
         $message .= "\nProgram : ".$formulir->rencana->program;
         $message .= "\nSpesifikasi : ".$formulir->rencana->spesifikasi;
         $message .= "\n\ntelah kami verifikasi. Silahkan download/cetak buktu-bukti PPDB melalui menu Download Berkas.";
-        $message .= "\n\nRuang Ujian akan diumumkan melalui website https://ppdb.malhikdua.sch.id";
+        $message .= "\n\nRuang Ujian akan diumumkan melalui website ".url()->to('/');
         $wa->send_text("62".$formulir->contact->no_wa,$message);
         return redirect()->route('staff.siswa.show',$formulir->id)->with(['success'=>'Berhasil Terima Pendaftar']);
     }
@@ -301,7 +301,7 @@ class SiswaController extends Controller
     {
         $this->updateFormulir($formulir, "Ditolak");
         $wa = new Fonnte;
-        $message = "Berkas anda kurang lengkap, mohon isi data yang diwajibkan. Klik https://ppdb.malhikdua.sch.id/login";
+        $message = "Berkas anda kurang lengkap, mohon isi data yang diwajibkan. Klik ".route('login');
         $message .= "\nJika sudah klik tombol VERIFIKASI BERKAS/PENDAFTARAN untuk diperiksa petugas";
         $wa->send_text("62".$formulir->contact->no_wa,$message);
         return redirect()->route('staff.siswa.show',$formulir->id)->with(['success'=>'Berhasil Tolak Pendaftar']);
