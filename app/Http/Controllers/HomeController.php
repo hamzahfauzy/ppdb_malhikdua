@@ -80,7 +80,7 @@ class HomeController extends Controller
 
         $dompdf->render();
 
-        $dompdf->stream('Kartu Ujian Masuk.pdf',['Attachment'=>false]);
+        $dompdf->stream('Kartu Ujian Masuk.pdf');
 
         // return view('kartu');
     }
@@ -93,7 +93,7 @@ class HomeController extends Controller
 
         $dompdf->render();
 
-        $dompdf->stream('Surat Pernyataan',['Attachment'=>false]);
+        $dompdf->stream('Surat Pernyataan.pdf');
 
         // return view('pernyataan');
     }
@@ -109,7 +109,7 @@ class HomeController extends Controller
         $dompdf->render();
 
 
-        $dompdf->stream('formulir.pdf',['Attachment'=>false]);
+        $dompdf->stream('biodata.pdf');
     }
 
     public function faktur()
@@ -126,7 +126,7 @@ class HomeController extends Controller
         $dompdf->render();
 
 
-        $dompdf->stream('formulir.pdf',['Attachment'=>false]);
+        $dompdf->stream('faktur.pdf');
     }
 
     public function pembayaran()
@@ -229,10 +229,12 @@ class HomeController extends Controller
 
                     // return $result;
 
+                    $request->tipe_pembayaran = $duitku[$request->tipe_pembayaran];
+
                     $request->merge([
                         'status' => $result['statusMessage'],
                         'tiket' => '',
-                        'payment_gateway' => $duitku[$request->payment_gateway],
+                        'payment_gateway' => $request->payment_gateway,
                         'payment_reference' => $result['reference'],
                         'payment_code' => $result['vaNumber'],
                         'checkout_url' => $result['paymentUrl'],
@@ -261,6 +263,10 @@ class HomeController extends Controller
                         $wa->send_text("62".$contact->no_wa,$message);
 
                         // if($request->payment_gateway == 'tripay')
+                        session()->forget('user_sms');
+                        session()->forget('sms');
+                        session()->forget('request');
+
                         return redirect()->to($nc->checkout_url);
                     }
                 }
