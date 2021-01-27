@@ -17,8 +17,8 @@ class Duitku
         $merchantOrderId = time(); // from merchant, unique
         $productDetails = 'PPDB Malhikdua';
         $customerVaName = $name; // display name on bank confirmation display
-        $callbackUrl = getenv('DUITKU_CALLBACK'); // url for callback
-        $returnUrl = route('payment-success'); // url for redirect
+        $callbackUrl = url()->to('/'); // getenv('DUITKU_CALLBACK'); // url for callback
+        $returnUrl = url()->to('/'); // url for redirect
 
         $signature = md5($merchantCode . $merchantOrderId . $paymentAmount . $merchantKey);
 
