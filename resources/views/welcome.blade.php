@@ -226,6 +226,7 @@
         var stepper1 = new Stepper(document.querySelector('#stepper1'))
         @if(Session::has('verification'))
         stepper1.next()
+        $('input, textarea, select').attr('required','')
         @endif
 
         function checkPendaftar(el) {
