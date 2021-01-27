@@ -24,189 +24,193 @@
 </head>
 
 <body>
-    <div class="container" style="background-color: #FFF;margin-top:15px;">
-        <form method="post" class="row">
+    <div class="container">
+        <form method="post" style="background-color: #FFF;margin-top:15px;margin-bottom:15px;padding:15px;">
             @csrf
-            <div class="col-md-12 mt-5">
-                <center>
-                    <img src="{{asset('images/faktur.png')}}" alt="" width="400px">
-                </center>
-                <div id="stepper1" class="bs-stepper">
-                    <div class="bs-stepper-header">
-                        <div class="step" data-target="#step-content-1">
-                            <button type="button" class="btn step-trigger">
-                                <span class="bs-stepper-circle">1</span>
-                                <span class="bs-stepper-label">Informasi Kontak</span>
-                            </button>
+            <div class="row">
+                <div class="col-md-12 mt-5">
+                    <center>
+                        <img src="{{asset('images/faktur.png')}}" alt="" style="max-width: 400px;width:100%;">
+                    </center>
+                    <div id="stepper1" class="bs-stepper">
+                        <div style="width: 100%;overflow:auto;">
+                            <div class="bs-stepper-header">
+                                <div class="step" data-target="#step-content-1">
+                                    <button type="button" class="btn step-trigger">
+                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-label">Informasi Kontak</span>
+                                    </button>
+                                </div>
+                                <div class="line"></div>
+                                <div class="step" data-target="#step-content-2">
+                                    <button type="button" class="btn step-trigger">
+                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-label">Informasi Siswa</span>
+                                    </button>
+                                </div>
+                                <div class="line"></div>
+                                <div class="step" data-target="#step-content-3">
+                                    <button type="button" class="btn step-trigger">
+                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-label">Pembayaran</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="line"></div>
-                        <div class="step" data-target="#step-content-2">
-                            <button type="button" class="btn step-trigger">
-                                <span class="bs-stepper-circle">2</span>
-                                <span class="bs-stepper-label">Informasi Siswa</span>
-                            </button>
-                        </div>
-                        <div class="line"></div>
-                        <div class="step" data-target="#step-content-3">
-                            <button type="button" class="btn step-trigger">
-                                <span class="bs-stepper-circle">3</span>
-                                <span class="bs-stepper-label">Pembayaran</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bs-stepper-content">
-                        <div id="step-content-1" class="content">
+                        <div class="bs-stepper-content">
+                            <div id="step-content-1" class="content">
 
-                            <div class="card card-body">
-                                @if(Session::has('contact_exists'))
+                                <div class="card card-body">
+                                    @if(Session::has('contact_exists'))
 
-                                <span class="alert alert-danger">{{Session::get('contact_exists')}}</span>
+                                    <span class="alert alert-danger">{{Session::get('contact_exists')}}</span>
 
-                                @endif
+                                    @endif
+
+                                    @if(Session::has('sms'))
+
+                                    <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">OTP sudah dikirim ke nomor HP anda. Silahkan cek nomor hp anda untuk mengetahui Kode OTP</span>
+
+                                    @endif
+
+                                    @if(Session::has('verification'))
+
+                                    <span class="alert {{Session::get('verification')->ok() ? 'alert-success' : 'alert-danger'}}">{{Session::get('verification')->message()}}</span>
+                                    <input type="hidden" name="verificated" value="true">
+
+                                    @endif
+
+                                    <div class="form-group">
+                                        <label for="">Nama Pendaftar</label>
+                                        <input type="text" name="nama_pendaftar" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class=" form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Nomor WA</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">+62</span>
+                                            </div>
+                                            <input type="text" name="no_wa" value="{{Session::get('request') ? Session::get('request')['no_wa'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Email</label>
+                                        <input type="text" name="email" value="{{Session::get('request') ? Session::get('request')['email'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
+                                    </div>
+                                    @if(Session::has('user_sms'))
+                                    <div class="form-group">
+                                        <label for="">Kode OTP</label>
+                                        <input type="text" name="otp" class="form-control">
+                                    </div>
+                                    <input type="hidden" name="user_sms" value="{{Session::get('user_sms')->id()}}">
+                                    @endif
+                                </div>
+
+                                <hr>
+
+                                @if(!Session::has('verification'))
 
                                 @if(Session::has('sms'))
 
-                                <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">OTP sudah dikirim ke nomor HP anda. Silahkan cek nomor hp anda untuk mengetahui Kode OTP</span>
+                                <button class="btn btn-primary">Verifikasi</button>
+                                <button name="reset" value="reset" class="btn btn-primary">Ulang</button>
+
+                                @else
+
+                                <button class="btn btn-primary">Kirim OTP</button>
 
                                 @endif
+                                @else
 
-                                @if(Session::has('verification'))
-
-                                <span class="alert {{Session::get('verification')->ok() ? 'alert-success' : 'alert-danger'}}">{{Session::get('verification')->message()}}</span>
-                                <input type="hidden" name="verificated" value="true">
+                                <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
 
                                 @endif
-
-                                <div class="form-group">
-                                    <label for="">Nama Pendaftar</label>
-                                    <input type="text" name="nama_pendaftar" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" value="{{Session::get('request') ? Session::get('request')['nama_pendaftar'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class=" form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Nomor WA</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">+62</span>
+                            </div>
+                            <div id="step-content-2" class="content">
+                                <div class="card card-body">
+                                    <div class="form-group">
+                                        <label for="">Nama Calon Siswa</label>
+                                        <input type="text" name="nama_calon_siswa" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gridCheck" onchange="checkPendaftar(this)">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Sama Dengan Pendaftar
+                                            </label>
                                         </div>
-                                        <input type="text" name="no_wa" value="{{Session::get('request') ? Session::get('request')['no_wa'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Email</label>
-                                    <input type="text" name="email" value="{{Session::get('request') ? Session::get('request')['email'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
-                                </div>
-                                @if(Session::has('user_sms'))
-                                <div class="form-group">
-                                    <label for="">Kode OTP</label>
-                                    <input type="text" name="otp" class="form-control">
-                                </div>
-                                <input type="hidden" name="user_sms" value="{{Session::get('user_sms')->id()}}">
-                                @endif
-                            </div>
-
-                            <hr>
-
-                            @if(!Session::has('verification'))
-
-                            @if(Session::has('sms'))
-
-                            <button class="btn btn-primary">Verifikasi</button>
-                            <button name="reset" value="reset" class="btn btn-primary">Ulang</button>
-
-                            @else
-
-                            <button class="btn btn-primary">Kirim OTP</button>
-
-                            @endif
-                            @else
-
-                            <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
-
-                            @endif
-                        </div>
-                        <div id="step-content-2" class="content">
-                            <div class="card card-body">
-                                <div class="form-group">
-                                    <label for="">Nama Calon Siswa</label>
-                                    <input type="text" name="nama_calon_siswa" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck" onchange="checkPendaftar(this)">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Sama Dengan Pendaftar
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Alumni PP Al Hikmah 2 ?</label>
-                                    <select name="alumni" class="form-control" onchange="checkAlumni(this)">
-                                        <option value="-" selected disabled>- Pilih Jawaban -</option>
-                                        <option value="Tidak">Tidak</option>
-                                        <option value="Ya">Ya</option>
-                                    </select>
-                                </div>
-                                <div class="form-group d-none" id="sebut_nama_sekolah">
-                                    <label for="">Sebutkan Nama Sekolah</label>
-                                    <input type="text" name="sebutkan_nama_sekolah" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Domisili</label>
-                                    <select name="domisili" class="form-control" onchange="checkDomisili(this)">
-                                        <option value="-" selected disabled>- Pilih Domisili -</option>
-                                        <option value="Warga Benda">Warga Benda</option>
-                                        <option value="Bukan Warga Benda">Bukan Warga Benda</option>
-                                    </select>
-                                </div>
-                                <div class="form-group d-none" id="ketik_alamat">
-                                    <label for="">Ketik alamat</label>
-                                    <textarea name="alamat" rows="5" class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                            <hr>
-                            <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
-                        </div>
-                        <div id="step-content-3" class="content">
-
-                            <div class="card">
-                                <div class="card-header bg-info text-white d-flex justify-content-between">
-                                    <h5>Pembayaran</h5>
-                                    <h5>Biaya : <b id="bp">Rp125.000,00</b></h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="">Payment Gateway</label>
-                                        <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
-                                            <option value="" selected disabled>- Pilih -</option>
-                                            <option value="duitku">DUITKU</option>
-                                            <option value="tripay">TRIPAY</option>
-                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Metode Pembayaran</label>
-                                        <select name="tipe_pembayaran" class="form-control">
-                                            <option value="" selected>- Pilih -</option>
-                                            @foreach($duitku as $k => $v)
-                                            <option value="{{$k}}" class="payment duitku">{{$v}}</option>
-                                            @endforeach
-                                            @if(isset($tripay['data']))
-                                            @foreach($tripay['data'] as $k => $v)
-                                            @if(!$v['active'])
-                                            @continue
-                                            @endif
-                                            <option value="{{$v['code']}}" class="payment tripay">{{$v['name']}}</option>
-                                            @endforeach
-                                            @endif
+                                        <label for="">Alumni PP Al Hikmah 2 ?</label>
+                                        <select name="alumni" class="form-control" onchange="checkAlumni(this)">
+                                            <option value="-" selected disabled>- Pilih Jawaban -</option>
+                                            <option value="Tidak">Tidak</option>
+                                            <option value="Ya">Ya</option>
                                         </select>
                                     </div>
-                                    <input type="hidden" name="biaya_pembayaran" value="125.000">
+                                    <div class="form-group d-none" id="sebut_nama_sekolah">
+                                        <label for="">Sebutkan Nama Sekolah</label>
+                                        <input type="text" name="sebutkan_nama_sekolah" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Domisili</label>
+                                        <select name="domisili" class="form-control" onchange="checkDomisili(this)">
+                                            <option value="-" selected disabled>- Pilih Domisili -</option>
+                                            <option value="Warga Benda">Warga Benda</option>
+                                            <option value="Bukan Warga Benda">Bukan Warga Benda</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group d-none" id="ketik_alamat">
+                                        <label for="">Ketik alamat</label>
+                                        <textarea name="alamat" rows="5" class="form-control"></textarea>
+                                    </div>
                                 </div>
+
+                                <hr>
+                                <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
                             </div>
+                            <div id="step-content-3" class="content">
 
-                            <hr>
+                                <div class="card">
+                                    <div class="card-header bg-info text-white d-flex justify-content-between">
+                                        <h5>Pembayaran</h5>
+                                        <h5>Biaya : <b id="bp">Rp125.000,00</b></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="">Payment Gateway</label>
+                                            <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
+                                                <option value="" selected disabled>- Pilih -</option>
+                                                <option value="duitku">DUITKU</option>
+                                                <option value="tripay">TRIPAY</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Metode Pembayaran</label>
+                                            <select name="tipe_pembayaran" class="form-control">
+                                                <option value="" selected>- Pilih -</option>
+                                                @foreach($duitku as $k => $v)
+                                                <option value="{{$k}}" class="payment duitku">{{$v}}</option>
+                                                @endforeach
+                                                @if(isset($tripay['data']))
+                                                @foreach($tripay['data'] as $k => $v)
+                                                @if(!$v['active'])
+                                                @continue
+                                                @endif
+                                                <option value="{{$v['code']}}" class="payment tripay">{{$v['name']}}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="biaya_pembayaran" value="125.000">
+                                    </div>
+                                </div>
 
-                            <button type="button" class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
-                            <button class="btn btn-primary">Submit</button>
+                                <hr>
+
+                                <button type="button" class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>

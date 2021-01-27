@@ -27,8 +27,8 @@
 </head>
 
 <body>
-    <div class="d-flex h-100 justify-content-center align-items-center">
-        <div style="background-color: #FFF;padding:20px;width:500px;margin:auto;">
+    <div class="d-flex h-100 justify-content-center align-items-center" style="margin:15px;">
+        <div style="background-color: #FFF;padding:20px;max-width:500px;margin:auto;">
             <center>
                 <img src="{{asset('images/faktur.png')}}" alt="" width="400px">
                 <h2>Check Status Pendaftaran</h2>

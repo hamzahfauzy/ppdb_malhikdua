@@ -27,14 +27,17 @@
 </head>
 
 <body>
-    <div class="d-flex h-100 justify-content-center align-items-center">
-        <div style="background-color: #FFF;padding:20px;width:500px;margin:auto;">
+    <div class="d-flex h-100 justify-content-center align-items-center" style="margin:15px;">
+        <div style="background-color: #FFF;padding:20px;max-width:500px;margin:auto;">
             <center>
+                <div class="alert alert-warning">
+                    Sistem sedang dalam proses migrasi. Kembali ONLINE  setelah proses selesai. Info PPDB silakan hubungi +62 81903189474
+                </div>
                 <h2>Selamat Datang di</h2>
                 <img src="{{asset('images/faktur.png')}}" alt="" width="400px">
                 <br>
-                <a href="/daftar" class="btn btn-success">Pendaftaran Peserta Didik Baru</a>
-                <a href="/check" class="btn btn-success">Check Status Pendaftaran</a>
+                <a href="/daftar" class="btn btn-success" style="margin-bottom: 10px;">Pendaftaran Peserta Didik Baru</a>
+                <a href="/check" class="btn btn-success" style="margin-bottom: 10px;">Check Status Pendaftaran</a>
             </center>
         </div>
     </div>
