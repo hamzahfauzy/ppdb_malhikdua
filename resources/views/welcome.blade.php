@@ -167,7 +167,7 @@
                                 </div>
 
                                 <hr>
-                                <button type="button" class="btn btn-primary" onclick="stepper1.next()">Next</button>
+                                <button type="button" class="btn btn-primary" onclick="validateStep2()">Next</button>
                             </div>
                             <div id="step-content-3" class="content">
 
@@ -226,8 +226,17 @@
         var stepper1 = new Stepper(document.querySelector('#stepper1'))
         @if(Session::has('verification'))
         stepper1.next()
-        $('input, textarea, select').attr('required','')
         @endif
+
+        function validateStep2()
+        {
+            if($('[name=sebutkan_nama_sekolah]').val() == "" || $('[name=alamat]').val()=="")
+            {
+                alert("Terdapat field yang kosong. silahkan di isi terlebih dahulu")
+                return
+            }
+            stepper1.next()
+        }
 
         function checkPendaftar(el) {
             var pendaftar = $("input[name=nama_pendaftar]");
