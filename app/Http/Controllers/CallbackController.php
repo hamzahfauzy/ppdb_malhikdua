@@ -43,12 +43,14 @@ class CallbackController extends Controller
         {
             $merchantRef = $callback->merchant_ref;
             $contact = Contact::where("payment_reference",$merchantRef)->firstOrFail();
-            $tiket = $this->tiket($contact);
             $data = [
                 'status' => $callback->status,
             ];
             if($callback->status == 'PAID')
+            {
+                $tiket = $this->tiket($contact);
                 $data['tiket'] = $tiket;
+            }
             $contact->update($data);
         }
     }
@@ -61,12 +63,14 @@ class CallbackController extends Controller
         {
             $merchantRef = $callback['reference'];
             $contact = Contact::where("payment_reference",$merchantRef)->firstOrFail();
-            $tiket = $this->tiket($contact);
             $data = [
                 'status' => $callback['resultCode'] == "00" ? "SUCCESS" : "FAILED",
             ];
             if($callback['resultCode']=="00")
+            {
+                $tiket = $this->tiket($contact);
                 $data['tiket'] = $tiket;
+            }
             $contact->update($data);
         }
     }
