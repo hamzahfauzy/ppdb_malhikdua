@@ -191,6 +191,7 @@ class HomeController extends Controller
                         'customer_name'     => $request->nama_pendaftar,
                         'customer_email'    => $request->email,
                         'customer_phone'    => $request->no_wa,
+                        'callback_url'      => route('tripay-callback'),
                         'order_items'       => [
                             [
                                 'sku'       => 'PPDB',

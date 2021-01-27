@@ -77,7 +77,6 @@ class Tripay
     public function callBack()
     {
         $this->checkKey();
-        header('Content-Type: application/json');
         $result = array();
         // ambil data JSON
         $json = file_get_contents("php://input");
@@ -96,72 +95,7 @@ class Tripay
             $data = json_decode($json);
             $event = $_SERVER['HTTP_X_CALLBACK_EVENT'];
 
-            if ($event == 'payment_status') {
-                if ($data->status == 'UNPAID') {
-                    $merchantRef = $this->dbH->escape_string(addslashes($data->merchant_ref));
-
-                    // belum pembayaran, lanjutkan proses sesuai sistem Anda, contoh:
-                    $queryUNPAID = $this->dQuery($merchantRef, $data->status);
-                    $updateUNPAID = $this->dbH->query($queryUNPAID);
-
-                    if ($updateUNPAID) {
-                        $result['success'] = true;
-                    } else {
-                        $result['success'] = false;
-                    }
-                } elseif ($data->status == 'PAID') {
-                    $merchantRef = $this->dbH->escape_string(addslashes($data->merchant_ref));
-
-                    // pembayaran sukses, lanjutkan proses sesuai sistem Anda, contoh:
-                    $queryPAID = $this->dQuery($merchantRef, $data->status);
-                    $updatePAID = $this->dbH->query($queryPAID);
-
-                    if ($updatePAID) {
-                        $result['success'] = true;
-                    } else {
-                        $result['success'] = false;
-                    }
-                } elseif ($data->status == 'EXPIRED') {
-                    $merchantRef = $this->dbH->escape_string(addslashes($data->merchant_ref));
-
-                    // pembayaran expired, lanjutkan proses sesuai sistem Anda, contoh:
-                    $queryEXPIRED = $this->dQuery($merchantRef, $data->status);
-                    $updateEXPIRED = $this->dbH->query($queryEXPIRED);
-
-                    if ($updateEXPIRED) {
-                        $result['success'] = true;
-                    } else {
-                        $result['success'] = false;
-                    }
-                } elseif ($data->status == 'FAILED') {
-                    $merchantRef = $this->dbH->escape_string(addslashes($data->merchant_ref));
-
-                    // pembayaran gagal, lanjutkan proses sesuai sistem Anda, contoh:
-                    $queryFAILED = $this->dQuery($merchantRef, $data->status);
-                    $updateFAILED = $this->dbH->query($queryFAILED);
-
-                    if ($updateFAILED) {
-                        $result['success'] = true;
-                    } else {
-                        $result['success'] = false;
-                    }
-                } elseif ($data->status == 'REFUND') {
-                    $merchantRef = $this->dbH->escape_string(addslashes($data->merchant_ref));
-
-                    // pembayaran dikembalikan, lanjutkan proses sesuai sistem Anda, contoh:
-                    $queryREFUND = $this->dQuery($merchantRef, $data->status);
-                    $updateREFUND = $this->dbH->query($queryREFUND);
-
-                    if ($updateREFUND) {
-                        $result['success'] = true;
-                    } else {
-                        $result['success'] = false;
-                    }
-                }
-            }
-            $result['data'] = $data;
-
-            return json_encode($result, JSON_PRETTY_PRINT);
+            return $data;
         }
     }
 
@@ -170,7 +104,6 @@ class Tripay
         try {
             //code...
             $this->checkKey();
-            header('Content-Type: application/json');
             $result = array();
             $curl = curl_init();
     

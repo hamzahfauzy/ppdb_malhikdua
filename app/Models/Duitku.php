@@ -5,6 +5,45 @@ namespace App\Models;
 
 class Duitku
 {
+
+    function callback()
+    {
+        $apiKey = getenv('DUITKU_MERCHANT_KEY'); // Your api key
+        $merchantCode = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null; 
+        $amount = isset($_POST['amount']) ? $_POST['amount'] : null; 
+        $merchantOrderId = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null; 
+        $productDetail = isset($_POST['productDetail']) ? $_POST['productDetail'] : null; 
+        $additionalParam = isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null; 
+        $paymentMethod = isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null; 
+        $resultCode = isset($_POST['resultCode']) ? $_POST['resultCode'] : null; 
+        $merchantUserId = isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null; 
+        $reference = isset($_POST['reference']) ? $_POST['reference'] : null; 
+        $signature = isset($_POST['signature']) ? $_POST['signature'] : null; 
+
+        if(!empty($merchantCode) && !empty($amount) && !empty($merchantOrderId) && !empty($signature))
+        {
+            $params = $merchantCode . $amount . $merchantOrderId . $apiKey;
+            $calcSignature = md5($params);
+
+            if($signature == $calcSignature)
+            {
+                //Your code here
+                if($resultCode == "00")
+                    return ['success'=>'success','data'=>$_POST];
+                else
+                    return ['error'=>'fail'];
+            }
+            else
+            {
+                return ['error'=>'Bad Signature'];
+            }
+        }
+        else
+        {
+            return ['error'=>'Bad Parameter'];
+        }
+    }
+
     function pay($amount, $method, $personal)
     {
         $name = $personal['name'];
@@ -17,7 +56,7 @@ class Duitku
         $merchantOrderId = time(); // from merchant, unique
         $productDetails = 'PPDB Malhikdua';
         $customerVaName = $name; // display name on bank confirmation display
-        $callbackUrl = route('login'); // getenv('DUITKU_CALLBACK'); // url for callback
+        $callbackUrl = route('duitku-callback'); // getenv('DUITKU_CALLBACK'); // url for callback
         $returnUrl = route('login'); // url for redirect
 
         $signature = md5($merchantCode . $merchantOrderId . $paymentAmount . $merchantKey);
