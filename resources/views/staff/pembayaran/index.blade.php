@@ -27,7 +27,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <a href="{{route('staff.pembayaran.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Buat Pembayaran</a>
+                <a href="{{route('staff.pembayaran.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Kirim Tiket</a>
             </div>
             <div class="card-body login-card-body">
               @if ($msg = session('success'))
