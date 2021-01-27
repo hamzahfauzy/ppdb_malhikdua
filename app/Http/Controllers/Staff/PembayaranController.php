@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Models\User;
 use App\Models\Fonnte;
 use App\Models\Tripay;
 use App\Models\Contact;
@@ -35,6 +36,7 @@ class PembayaranController extends Controller
     public function create()
     {
         //
+        return view('staff.pembayaran.create');
     }
 
     /**
@@ -46,6 +48,63 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         //
+        $check_contact = Contact::where('email',$request->email)->orwhere('no_wa',$request->no_wa)->exists();
+        $check_user = Contact::where('email',$request->no_wa)->exists();
+        if($check_contact || $check_user)
+            return redirect()->back()->with(['contact_exists' => 'Email atau No. Whatsapp sudah terdaftar']);
+        
+        $contact = new Contact();
+        $amount = $request->domisili == 'Warga Benda' || $request->alumni == 'Ya' ? 110000 : 135000;
+        // bayar dulu
+        
+        $request->merge([
+            'status' => 'PAID',
+            'tiket' => '',
+            'tipe_pembayaran' => '',
+            'biaya_pembayaran' => $amount,
+            'payment_gateway' => '',
+            'payment_reference' => '',
+            'payment_code' => '',
+            'checkout_url' => '',
+            'expired_time' => '',
+        ]);
+
+        if ($nc = $contact->create($request->post())) {
+            $tiket = $nc->id;
+            if($tiket < 10)
+                $tiket = "000".$tiket;
+            elseif($tiket < 100)
+                $tiket = "00".$tiket;
+            elseif($tiket < 1000)
+                $tiket = "0".$tiket;
+            
+            $tiket = "MDTKT".$tiket;
+            $tiket = md5($tiket);
+            $tiket = substr($tiket,0,8);
+            $nc->update([
+                'tiket' => $tiket
+            ]);
+            $user = new User();
+
+            if ($user->create([
+                'email' => $nc->no_wa,
+                'name' => $nc->nama_pendaftar,
+                'password' => bcrypt($nc->no_wa)
+            ])) {
+                $contact = $nc;
+                $message = "Hai $contact->nama_pendaftar ($contact->alamat)";
+                $message .= "\nBerikut adalah tiket pengisian formulir anda : $tiket";
+                $message .= "\nGunakan tiket ini untuk mengisi/mengedit formulir PPDB hingga lengkap.";
+                $message .= "\nFormulir PPDB di ".route('login')." (ONLINE)";
+                $message .= "\nManfaatkan tombol SAVE untuk menyimpan isian formulir.";
+                $message .= "\nJika sudah, klik tombol VERIFIKASI BERKAS/PENDAFTARAN untuk diperiksa petugas.";
+
+                $wa = new Fonnte;
+                $wa->send_text("62".$contact->no_wa,$message);
+
+                return redirect()->route('staff.pembayaran.index')->with(['success' => 'Berhasil membuat pembayaran']);
+            }
+        }
     }
 
     /**
