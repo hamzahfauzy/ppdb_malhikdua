@@ -136,7 +136,7 @@
 
 
     $('input, textarea, select').attr('required','')
-    // $('input[type=file]').removeAttr('required')
+    $('input[type=file]').removeAttr('required')
     function setUploadKartuPemerintah(val)
     {
         $('[name=upload_kartu_pemerintah]').removeAttr('required')
