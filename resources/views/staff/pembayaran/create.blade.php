@@ -37,12 +37,12 @@
                         <input type="text" name="nama_pendaftar" class=" form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="">Nomor WA</label>
+                        <label for="">Nomor WA (Contoh : 81234567890)</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">+62</span>
                             </div>
-                            <input type="text" name="no_wa" class="form-control" required>
+                            <input type="tel" pattern="^[1-9]\d*$" name="no_wa" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
