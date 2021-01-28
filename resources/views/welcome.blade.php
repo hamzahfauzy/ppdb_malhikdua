@@ -69,7 +69,7 @@
 
                                     @if(Session::has('sms'))
 
-                                    <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">OTP sudah dikirim ke nomor HP anda. Silahkan cek nomor hp anda untuk mengetahui Kode OTP</span>
+                                    <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">SMS berisi kode OTP sudah dikirim ke nomor HP anda. Silahkan cek SMS, masukkan kode tersebut ke kotak isian, dan klik Verifikasi.</span>
 
                                     @endif
 
@@ -146,6 +146,17 @@
                                             <option value="-" selected disabled>- Pilih Jawaban -</option>
                                             <option value="Tidak">Tidak</option>
                                             <option value="Ya">Ya</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group d-none" id="asal_sekolah">
+                                        <label for="">Asal Sekolah</label>
+                                        <select class="form-control" onchange="setAlumni(this.value)">
+                                            <option value="-" selected disabled>- Pilih Jawaban -</option>
+                                            <option value="SMP AL HIKMAH 2">SMP AL HIKMAH 2</option>
+                                            <option value="MTS AL HIKMAH 2">MTS AL HIKMAH 2</option>
+                                            <option value="Madrasah Ibtida’iyah Tamrinussibyan">Madrasah Ibtida’iyah Tamrinussibyan</option>
+                                            <option value="TK AL HIKMAH 2">TK AL HIKMAH 2</option>
+                                            <option value="Tahfidzul Qur’an AL HIKMAH 2">Tahfidzul Qur’an AL HIKMAH 2</option>
                                         </select>
                                     </div>
                                     <div class="form-group d-none" id="sebut_nama_sekolah">
@@ -250,8 +261,15 @@
             }
         }
 
+        function setAlumni(val)
+        {
+            var sebut = $("#sebut_nama_sekolah")
+            sebut.find("input").val(val)
+        }
+
         function checkAlumni(el) {
             var sebut = $("#sebut_nama_sekolah")
+            var asal = $("#asal_sekolah")
             var biaya = $("input[name='biaya_pembayaran']")
             var bp = $("#bp")
 
@@ -259,9 +277,12 @@
 
             if (el.value !== "Ya") {
                 sebut.removeClass("d-none")
+                asal.addClass("d-none")
             } else {
-                sebut.find("input").val("PP Al Hikmah 2")
                 sebut.addClass("d-none")
+                asal.removeClass("d-none")
+                // sebut.find("input").val("PP Al Hikmah 2")
+                // sebut.addClass("d-none")
             }
 
             if (el.value == "Ya" || domisili.val() == "Warga Benda") {

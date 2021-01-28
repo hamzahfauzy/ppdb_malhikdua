@@ -28,14 +28,14 @@
 
 <body>
     <div class="d-flex h-100 justify-content-center align-items-center" style="margin:15px;">
-        <div style="background-color: #FFF;padding:20px;max-width:500px;margin:auto;">
+        <div style="background-color: #FFF;padding:20px;margin:auto;max-width:550px;">
             <center>
-                <div class="alert alert-warning">
-                    Sistem sedang dalam proses migrasi. Kembali ONLINE  setelah proses selesai. Info PPDB silakan hubungi +62 81903189474
-                </div>
-                <h2>Selamat Datang di</h2>
-                <img src="{{asset('images/faktur.png')}}" alt="" width="400px">
+                <img src="{{asset('images/ALUR-PPDB-1.jpg')}}" alt="" width="100%">
                 <br>
+                <br>
+                <div class="alert alert-info">
+                    BANTUAN PPDB HUB : 0819-0318-9474
+                </div>
                 <a href="/daftar" class="btn btn-success" style="margin-bottom: 10px;">Pendaftaran Peserta Didik Baru</a>
                 <a href="/check" class="btn btn-success" style="margin-bottom: 10px;">Check Status Pendaftaran</a>
             </center>
