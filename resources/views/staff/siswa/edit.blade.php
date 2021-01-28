@@ -137,12 +137,6 @@
 
     $('input, textarea, select').attr('required','')
     $('input[type=file]').removeAttr('required')
-    function setUploadKartuPemerintah(val)
-    {
-        $('[name=upload_kartu_pemerintah]').removeAttr('required')
-        if(val == 'Ya')
-            $('[name=upload_kartu_pemerintah]').attr('required','')
-    }
     $("input[name='rencana[program]']").change(initProgram)
 
     function initProgram(){
