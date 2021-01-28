@@ -218,8 +218,8 @@
                                 <p>{{date('d-m-Y',strtotime($formulir->ibu->tanggal_lahir))}}</p>
                             </div>
                             <div class="form-group">
-                                <label for="">No KK Ayah</label>
-                                <p>{{$formulir->ibu->no_kk}}</p>
+                                <label for="">NIK</label>
+                                <p>{{$formulir->ibu->no_kk_ibu}}</p>
                             </div>
                             <div class="form-group">
                                 <label for="">Tanggal Lahir</label>

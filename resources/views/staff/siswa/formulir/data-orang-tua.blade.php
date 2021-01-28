@@ -64,7 +64,7 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="">Nomor KK</label>
+    <label for="">NIK</label>
     <input type="text" name="ibu[no_kk_ibu]" class="form-control">
 </div>
 <div class="form-group">
