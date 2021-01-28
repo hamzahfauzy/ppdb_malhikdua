@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tanggal Lahir</label>
-                            <p>{{$formulir->data_diri->tanggal_lahir}}</p>
+                            <p>{{date('d-m-Y',strtotime($formulir->data_diri->tanggal_lahir))}}</p>
                         </div>
                         <div class="form-group">
                             <label for="">Jenis Kelamin</label>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tanggal Lahir</label>
-                            <p>{{$formulir->ayah->tanggal_lahir}}</p>
+                            <p>{{date('d-m-Y',strtotime($formulir->ayah->tanggal_lahir))}}</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
@@ -222,7 +222,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tanggal Lahir</label>
-                            <p>{{$formulir->ibu->tanggal_lahir}}</p>
+                            <p>{{date('d-m-Y',strtotime($formulir->ibu->tanggal_lahir))}}</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">

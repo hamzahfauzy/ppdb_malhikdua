@@ -116,6 +116,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>
     $('input, textarea, select').attr('required','')
+    function setUploadKartuPemerintah(val)
+    {
+        $('[name=upload_kartu_pemerintah]').removeAttr('required')
+        if(val == 'Ya')
+            $('[name=upload_kartu_pemerintah]').attr('required','')
+    }
     $("input[name='rencana[program]']").change(function() {
 
         $("#fg-spf").removeClass("d-none")
