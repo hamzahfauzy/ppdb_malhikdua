@@ -10,17 +10,22 @@ class CallbackController extends Controller
 {
     function tiket($contact)
     {
-        $tiket = $contact->id;
-        if($tiket < 10)
-            $tiket = "000".$tiket;
-        elseif($tiket < 100)
-            $tiket = "00".$tiket;
-        elseif($tiket < 1000)
-            $tiket = "0".$tiket;
-        
-        $tiket = "MDTKT".$tiket;
-        $tiket = md5($tiket);
-        $tiket = substr($tiket,0,8);
+        if($contact->tiket == "")
+        {
+            $tiket = $contact->id;
+            if($tiket < 10)
+                $tiket = "000".$tiket;
+            elseif($tiket < 100)
+                $tiket = "00".$tiket;
+            elseif($tiket < 1000)
+                $tiket = "0".$tiket;
+            
+            $tiket = "MDTKT".$tiket;
+            $tiket = md5($tiket);
+            $tiket = substr($tiket,0,8);
+        }
+        else
+            $tiket = $contact->tiket;
 
         $wa = new Fonnte;
         $message = "Terima kasih $contact->nama_pendaftar ($contact->alamat) telah melakukan pembayaran PPDB Malhikdua melalui $contact->tipe_pembayaran";
