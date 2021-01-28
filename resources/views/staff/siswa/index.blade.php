@@ -53,7 +53,7 @@
                                     <td>{{$s->diri->nama_lengkap}}</td>
                                     <td>{{$s->diri->jenis_kelamin}}</td>
                                     <td>{{$s->diri->tempat_tinggal}}</td>
-                                    <td>{{$s->diri->tanggal_lahir}}</td>
+                                    <td>{{date('d-m-Y',strtotime($s->diri->tanggal_lahir))}}</td>
                                     <td><span class="badge badge-{{$labels[$s->status]}}">{{$s->status}}</span></td>
                                     <td>
                                         <a href="{{route('staff.siswa.show',$s->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
