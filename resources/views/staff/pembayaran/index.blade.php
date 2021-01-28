@@ -62,6 +62,12 @@
                       <td>{{$contact->status}}</td>
                       <td>
                           <a href="{{route('staff.pembayaran.show',$contact->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Detail</a>
+                          <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="if(confirm('Apakah anda yakin akan menghapus data ini ?')){formDelete{{$contact->id}}.submit()}else{return false}"><i class="fa fa-trash"></i> Hapus</a>
+
+                          <form action="{{route('staff.pembayaran.destroy',$contact->id)}}" method="post" class="d-none" name="formDelete{{$contact->id}}">
+                            @csrf
+                            @method('DELETE')
+                          </form>
                       </td>
                   </tr>
                   @endforeach

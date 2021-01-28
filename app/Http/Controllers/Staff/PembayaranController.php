@@ -198,5 +198,9 @@ class PembayaranController extends Controller
     public function destroy($id)
     {
         //
+        $contact = Contact::findOrFail($id);
+        User::where('email',$contact->no_wa)->first()->delete();
+        $contact->delete();
+        return redirect()->route('staff.pembayaran.index')->with(['success'=>'Pembayaran berhasil di hapus']);
     }
 }
