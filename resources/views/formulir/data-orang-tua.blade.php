@@ -17,7 +17,7 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="">Nomor KK Ayah</label>
+    <label for="">NIK Ayah</label>
     <input type="text" name="ayah[no_kk_ayah]" class="form-control">
 </div>
 <div class="form-group">

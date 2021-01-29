@@ -442,8 +442,10 @@ class HomeController extends Controller
                             $shun = "";
                             if($request->file('upload_shun'))
                                 $shun = $request->file("upload_shun")->store("berkas");
-                            $kartu_pemerintah = $request->file("upload_kartu_pemerintah")->store("berkas");
-                            if ($kk && $akte  && $kartu_pemerintah) {
+                            $kartu_pemerintah = "";
+                            if($kartu_pemerintah = $request->file("upload_kartu_pemerintah"))
+                                $kartu_pemerintah = $request->file("upload_kartu_pemerintah")->store("berkas");
+                            if ($kk && $akte) {
     
                                 $berkas = new BerkasPendaftaran();
     
@@ -464,7 +466,7 @@ class HomeController extends Controller
                     }
                 } catch (\Exception $e) {
                     DB::rollback();
-                    // throw($e);
+                    throw($e);
                     // something went wrong
                 }
             }

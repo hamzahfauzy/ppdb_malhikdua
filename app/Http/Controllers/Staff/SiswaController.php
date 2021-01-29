@@ -166,10 +166,16 @@ class SiswaController extends Controller
                 ) {
                     $kk = $request->file("upload_kk")->store("berkas");
                     $akte = $request->file("upload_akte")->store("berkas");
-                    $ijazah = $request->file("upload_ijazah")->store("berkas");
-                    $shun = $request->file("upload_shun")->store("berkas");
-                    $kartu_pemerintah = $request->file("upload_kartu_pemerintah")->store("berkas");
-                    if ($kk && $akte && $ijazah && $shun  && $kartu_pemerintah) {
+                    $ijazah = "";
+                    if($request->file("upload_ijazah"))
+                        $ijazah = $request->file("upload_ijazah")->store("berkas");
+                    $shun = "";
+                    if($request->file("upload_shun"))
+                        $shun = $request->file("upload_shun")->store("berkas");
+                    $kartu_pemerintah = "";
+                    if($request->file("upload_kartu_pemerintah"))
+                        $kartu_pemerintah = $request->file("upload_kartu_pemerintah")->store("berkas");
+                    if ($kk && $akte) {
 
                         $berkas = new BerkasPendaftaran();
 
