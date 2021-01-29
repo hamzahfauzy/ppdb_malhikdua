@@ -136,7 +136,7 @@
 
 
     $('input, textarea, select').attr('required','')
-    $('input[type=file],input[name="berkas[no_seri_shun]"],input[name="berkas[no_seri_ijazah]"]').removeAttr('required')
+    $('input[type=file],input[name="berkas[no_seri_shun]"],input[name="berkas[no_seri_ijazah]"],input[name="berkas[no_peserta_un]"]').removeAttr('required')
     $('input[name=upload_kk],input[name=upload_akte]').attr('required','')
     function setUploadKartuPemerintah(val)
     {
