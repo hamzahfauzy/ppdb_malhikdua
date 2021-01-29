@@ -135,7 +135,7 @@
     initProgram();
 
     $('input, textarea, select').attr('required','')
-    $('input[type=file],input[name="berkas[no_seri_shun]"]').removeAttr('required')
+    $('input[type=file],input[name="berkas[no_seri_shun],input[name="berkas[no_seri_ijazah]"]').removeAttr('required')
     $("input[name='rencana[program]']").change(initProgram)
 
     function initProgram(){
