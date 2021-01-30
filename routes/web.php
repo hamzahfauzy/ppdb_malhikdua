@@ -27,7 +27,7 @@ Route::match(['get', 'post'], 'check', [App\Http\Controllers\HomeController::cla
 Route::get('payment', [App\Http\Controllers\HomeController::class, 'paymentGateway'])->name('payment');
 Route::get('payment-success', [App\Http\Controllers\HomeController::class, 'paymentSuccess'])->name('payment-success');
 Route::post('tripay-callback', [App\Http\Controllers\CallbackController::class, 'tripay'])->name('tripay-callback');
-Route::post('duitku-callback', [App\Http\Controllers\CallbackController::class, 'duitku'])->name('duitky-callback');
+Route::post('duitku-callback', [App\Http\Controllers\CallbackController::class, 'duitku'])->name('duitku-callback');
 
 Route::middleware(['auth:staff'])->prefix('staff')->name('staff.')->group(function(){
     Route::get('/', [App\Http\Controllers\Staff\HomeController::class, 'index'])->name('index');
