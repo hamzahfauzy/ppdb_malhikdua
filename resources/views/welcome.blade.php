@@ -115,7 +115,7 @@
 
                                 @if(!Session::has('verification'))
 
-                                @if(Session::has('otp'))
+                                @if(Session::has('otp')) 
 
                                 <button class="btn btn-primary">Verifikasi</button>
                                 <button name="reset" value="reset" class="btn btn-primary">Ulang</button>
