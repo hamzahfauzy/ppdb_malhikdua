@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Dompdf\Dompdf;
-use Authy\AuthyApi;
 use Dompdf\Options;
 use App\Models\User;
 use App\Models\Duitku;
@@ -19,6 +18,7 @@ use App\Models\Formulir;
 use App\Models\AlamatAsal;
 use Illuminate\Http\Request;
 use App\Models\DataPendidikan;
+use App\Models\OneTimePassword;
 use App\Models\BerkasPendaftaran;
 use App\Models\DataRencanaSekolah;
 use Illuminate\Support\Facades\DB;
@@ -155,18 +155,15 @@ class HomeController extends Controller
 
             if($request->has('reset'))
             {
-                session()->forget('user_sms');
-                session()->forget('sms');
+                session()->forget('otp');
                 session()->forget('request');
                 return redirect()->back();
             }
             // check email and phone exists
             $check_contact = Contact::where('email',$request->email)->orwhere('no_wa',$request->no_wa)->exists();
-            $check_user = Contact::where('email',$request->no_wa)->exists();
+            $check_user = User::where('email',$request->no_wa)->exists();
             if($check_contact || $check_user)
                 return redirect()->back()->with(['contact_exists' => 'Email atau No. Whatsapp sudah terdaftar']);
-            
-            $authy_api = new AuthyApi(getenv('AUTHY_KEY'));
 
             if ($request->has('verificated')) {
                 unset($request['verificated']);
@@ -263,8 +260,7 @@ class HomeController extends Controller
                         $wa->send_text("62".$contact->no_wa,$message);
 
                         // if($request->payment_gateway == 'tripay')
-                        session()->forget('user_sms');
-                        session()->forget('sms');
+                        session()->forget('otp');
                         session()->forget('request');
                         session()->forget('verification');
 
@@ -273,43 +269,48 @@ class HomeController extends Controller
                 }
             } else {
                 if (!$request->has('otp')) {
-                    try {
-                        //code...
-                        $user = $authy_api->registerUser($request->post('email'), $request->post('no_wa'), 62); // email, cellphone, country_code
-    
-                        if ($user->ok()) {
-                            $sms = $authy_api->requestSms($user->id());
-    
-                            if ($sms->ok()) {
-                                session([
-                                    'user_sms' => $user,
-                                    'sms' => $sms,
-                                    'request' => $request->input()
-                                ]);
-                                return redirect()->back();
-                            }
-                        }
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        return view('not-connected');
-                    }
-                } else {
-                    try {
-                        $verification = $authy_api->verifyToken($request->post('user_sms'), $request->post('otp'));
-    
-                        if ($verification->ok()) {
-                            session()->forget('request');
+                    // send otp section
+                    $otp = new OneTimePassword;
+                    $kode = $otp->generate(6);
+                    $otp = $otp->create([
+                        'no_wa'  => $request->no_wa,
+                        'email'  => $request->email,
+                        'kode'   => $kode,
+                        'status' => 'SEND', 
+                        'expired_at' => Carbon::now()->addMinutes(4)->format('Y-m-d H:i:s'), 
+                    ]);
+                    $message = "Kode OTP Anda adalah ".$kode;
 
-                            session([
-                                'verification' => $verification,
-                                'request' => $request->input()
-                            ]);
-                            return redirect()->back();
-                        }
-                        //code...
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        return view('not-connected');
+                    $wa = new Fonnte;
+                    $wa->send_text("62".$request->no_wa,$message);
+                    session([
+                        'otp' => $otp,
+                        'request' => $request->input()
+                    ]);
+                    return redirect()->back();
+                } else {
+                    // OTP verification
+                    $otp = new OneTimePassword;
+                    $kode = $otp->generate(6);
+                    $otp = OneTimePassword::where('no_wa',$request->no_wa)
+                                        ->where('email',$request->email)
+                                        ->where('kode',$request->otp)
+                                        ->where('status','SEND')
+                                        ->whereDate('expired_at','<=',Carbon::now()->format('Y-m-d H:i:s'))
+                                        ->first();
+                    if(!empty($otp))
+                    {
+                        $otp->update(['status'=>'USED']);
+                        session()->forget('request');
+                        session([
+                            'verification' => $otp,
+                            'request' => $request->input()
+                        ]);
+                        return redirect()->back();
+                    }
+                    else
+                    {
+                        return redirect()->back()->with('error','Kode OTP tidak ditemukan atau sudah kadaluarsa');
                     }
                 }
             }

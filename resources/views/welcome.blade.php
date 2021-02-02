@@ -67,15 +67,21 @@
 
                                     @endif
 
-                                    @if(Session::has('sms'))
+                                    @if(Session::has('error'))
 
-                                    <span class="alert {{Session::get('sms')->ok() ? 'alert-success' : 'alert-danger'}}">SMS berisi kode OTP sudah dikirim ke nomor HP anda. Silahkan cek SMS, masukkan kode tersebut ke kotak isian, dan klik Verifikasi.</span>
+                                    <span class="alert alert-danger">{{Session::get('error')}}</span>
+
+                                    @endif
+
+                                    @if(Session::has('otp'))
+
+                                    <span class="alert alert-success">Kode OTP sudah dikirim ke nomor WA anda. Silahkan cek WA, masukkan kode tersebut ke kotak isian, dan klik Verifikasi.</span>
 
                                     @endif
 
                                     @if(Session::has('verification'))
 
-                                    <span class="alert {{Session::get('verification')->ok() ? 'alert-success' : 'alert-danger'}}">{{Session::get('verification')->message()}}</span>
+                                    <span class="alert alert-success">OTP Valid</span>
                                     <input type="hidden" name="verificated" value="true">
 
                                     @endif
@@ -97,12 +103,11 @@
                                         <label for="">Email</label>
                                         <input type="text" name="email" value="{{Session::get('request') ? Session::get('request')['email'] : ''}}" <?= Session::get('request') ? 'readonly' : '' ?> class="form-control" required>
                                     </div>
-                                    @if(Session::has('user_sms'))
+                                    @if(Session::has('otp'))
                                     <div class="form-group">
                                         <label for="">Kode OTP</label>
                                         <input type="text" name="otp" class="form-control">
                                     </div>
-                                    <input type="hidden" name="user_sms" value="{{Session::get('user_sms')->id()}}">
                                     @endif
                                 </div>
 
@@ -110,7 +115,7 @@
 
                                 @if(!Session::has('verification'))
 
-                                @if(Session::has('sms'))
+                                @if(Session::has('otp'))
 
                                 <button class="btn btn-primary">Verifikasi</button>
                                 <button name="reset" value="reset" class="btn btn-primary">Ulang</button>
