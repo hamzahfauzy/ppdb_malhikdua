@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Duitku;
 use App\Models\Fonnte;
+use App\Models\Tripay;
 use Illuminate\Http\Request;
 
 class CallbackController extends Controller
@@ -41,7 +42,9 @@ class CallbackController extends Controller
     //
     function tripay()
     {
-        $tripay = new Tripay;
+        $privateKey = getenv('TRIPAY_PRIVATE_KEY');
+        $apiKey = getenv('TRIPAY_API_KEY');
+        $tripay = new Tripay($privateKey, $apiKey);
         $callback = $tripay->callback();
 
         if($callback->status)

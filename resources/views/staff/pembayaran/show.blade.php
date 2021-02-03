@@ -30,6 +30,7 @@
                         {{ $msg }}
                     </div>
                 @endif
+                <a href="{{route('staff.pembayaran.check',$contact->id)}}" class="btn btn-success">Cek Pembayaran</a>
                 @if($contact->tiket=="")
                     <a href="{{route('staff.pembayaran.approve',$contact->id)}}" class="btn btn-primary" onclick="if(confirm('Apakah anda yakin akan approve pembayaran ini?')){return true}else{return false}">Approve Pendaftaran</a>
                 @endif
