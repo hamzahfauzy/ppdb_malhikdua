@@ -37,7 +37,7 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{$pembayaran_sukses}}</h3>
+                        <h3>Rp. {{number_format($pembayaran_sukses)}}</h3>
                         <span>Pembayaran Sukses</span>
                     </div>
                     <a href="/staff/pembayaran" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
@@ -47,7 +47,7 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{$pembayaran_pending}}</h3>
+                        <h3>Rp. {{number_format($pembayaran_pending)}}</h3>
                         <span>Pembayaran Pending</span>
                     </div>
                     <a href="/staff/pembayaran" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
@@ -57,7 +57,7 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>{{$total_pembayaran}}</h3>
+                        <h3>Rp. {{number_format($total_pembayaran)}}</h3>
                         <span>Total Pembayaran</span>
                     </div>
                     <a href="/staff/pembayaran" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>

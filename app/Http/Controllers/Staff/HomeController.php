@@ -17,9 +17,9 @@ class HomeController extends Controller
     public function index()
     {
         $jumlah_pendaftar = Formulir::count();
-        $pembayaran_sukses = Contact::where('status','<>','UNPAID')->where('status','<>','')->sum('biaya_pembayaran');
-        $pembayaran_pending = Contact::where('status','UNPAID')->sum('biaya_pembayaran');
-        $total_pembayaran = Contact::where('status','<>','')->sum('biaya_pembayaran');
+        $pembayaran_sukses = Contact::where('tiket','<>','')->sum('biaya_pembayaran');
+        $pembayaran_pending = Contact::where('tiket','')->sum('biaya_pembayaran');
+        $total_pembayaran = $pembayaran_sukses+$pembayaran_pending;
         return view('staff.home',compact('jumlah_pendaftar','pembayaran_sukses','pembayaran_pending','total_pembayaran'));
     }
 
