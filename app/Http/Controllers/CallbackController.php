@@ -50,7 +50,7 @@ class CallbackController extends Controller
 
         if($callback->status)
         {
-            $merchantRef = $callback->merchant_ref;
+            $merchantRef = $callback->reference;
             $contact = Contact::where("payment_reference",$merchantRef)->firstOrFail();
             $data = [
                 'status' => $callback->status,
