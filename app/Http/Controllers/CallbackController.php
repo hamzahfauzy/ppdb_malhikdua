@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Duitku;
 use App\Models\Fonnte;
 use App\Models\Tripay;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class CallbackController extends Controller
