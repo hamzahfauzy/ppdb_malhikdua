@@ -61,6 +61,7 @@ class CallbackController extends Controller
                 $data['tiket'] = $tiket;
             }
             $contact->update($data);
+            return ['success'=>true];
         }
     }
 
@@ -81,6 +82,7 @@ class CallbackController extends Controller
                 $data['tiket'] = $tiket;
             }
             $contact->update($data);
+            return ['success'=>true];
         }
     }
 }
