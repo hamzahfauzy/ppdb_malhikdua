@@ -233,7 +233,7 @@ class HomeController extends Controller
                         'tipe_pembayaran' => $duitku[$request->tipe_pembayaran],
                         'payment_gateway' => $request->payment_gateway,
                         'payment_reference' => $result['reference'],
-                        'payment_code' => $result['reference'],
+                        'payment_code' => $result['merchantOrderId'],
                         'checkout_url' => $result['paymentUrl'],
                         'expired_time' => '',
                     ]);

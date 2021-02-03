@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Models\User;
+use App\Models\Duitku;
 use App\Models\Fonnte;
 use App\Models\Tripay;
 use App\Models\Contact;
@@ -131,6 +132,18 @@ class PembayaranController extends Controller
                 $response_data = $response['data'];
                 $contact->update([
                     'status' => $response_data['status']
+                ]);
+            }
+        }
+        else
+        {
+            // duitku
+            $duitku = new Duitku;
+            $check = $duitku->check($contact->payment_code);
+            if($check['statusCode']=="00")
+            {
+                $contact->update([
+                    'status' => $check['statusMessage']
                 ]);
             }
         }
