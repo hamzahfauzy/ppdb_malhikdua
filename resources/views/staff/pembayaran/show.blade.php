@@ -30,7 +30,7 @@
                         {{ $msg }}
                     </div>
                 @endif
-                @if(in_array($contact->status,['UNPAID']))
+                @if(in_array($contact->status,['UNPAID']) || $contact->tiket=="")
                 <a href="{{route('staff.pembayaran.check',$contact->id)}}" class="btn btn-success">Cek Pembayaran</a>
                 @endif
                 @if($contact->tiket=="")
