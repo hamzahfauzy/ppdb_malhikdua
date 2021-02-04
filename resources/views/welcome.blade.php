@@ -193,19 +193,20 @@
                                         <h5>Biaya : <b id="bp">Rp125.000,00</b></h5>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="">Payment Gateway</label>
                                             <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
                                                 <option value="" selected disabled>- Pilih -</option>
                                                 <option value="duitku">DUITKU</option>
                                                 <option value="tripay">TRIPAY</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group">
                                             <label for="">Metode Pembayaran</label>
+                                            <input type="hidden" name="payment_gateway" value="tripay">
                                             <select name="tipe_pembayaran" class="form-control">
                                                 <option value="" selected>- Pilih -</option>
-                                                @foreach($duitku as $k => $v)
+                                                {{-- @foreach($duitku as $k => $v)
                                                 <option value="{{$k}}" class="payment duitku">{{$v}}</option>
                                                 @endforeach
                                                 @if(isset($tripay['data']))
@@ -215,7 +216,14 @@
                                                 @endif
                                                 <option value="{{$v['code']}}" class="payment tripay">{{$v['name']}}</option>
                                                 @endforeach
+                                                @endif --}}
+                                                @if(isset($tripay['data']))
+                                                @foreach($tripay['data'] as $k => $v)
+                                                @if(!$v['active'])
+                                                @continue
                                                 @endif
+                                                <option value="{{$v['code']}}">{{$v['name']}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <input type="hidden" name="biaya_pembayaran" value="125.000">
