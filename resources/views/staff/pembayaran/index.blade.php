@@ -36,11 +36,11 @@
                   </div>
               @endif
               <div class="table-responsive">
-              <table class="table table-striped datatable display responsive nowrap">
+              <table class="table table-striped datatable display responsive">
                   <thead>
                   <tr>
                       <td>#</td>
-                      <td>Nama Pendaftar</td>
+                      <td class="all">Nama Pendaftar</td>
                       <td>Nama Calon Siswa</td>
                       <td>Pembayaran</td>
                       <td>Tiket</td>
