@@ -224,6 +224,7 @@
                                                 @endif
                                                 <option value="{{$v['code']}}">{{$v['name']}}</option>
                                                 @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                         <input type="hidden" name="biaya_pembayaran" value="125.000">
