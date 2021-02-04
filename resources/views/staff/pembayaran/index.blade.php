@@ -45,7 +45,7 @@
                       <td>Pembayaran</td>
                       <td>Tiket</td>
                       <td>Status</td>
-                      <td>Aksi</td>
+                      <td class="all">Aksi</td>
                   </tr>
                   </thead>
                   <tbody>
