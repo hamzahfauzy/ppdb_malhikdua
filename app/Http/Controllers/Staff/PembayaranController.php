@@ -140,7 +140,7 @@ class PembayaranController extends Controller
             // duitku
             $duitku = new Duitku;
             $check = $duitku->check($contact->payment_code);
-            if($check['statusCode']=="00")
+            if(isset($check['statusCode']) && $check['statusCode']=="00")
             {
                 $contact->update([
                     'status' => $check['statusMessage']
