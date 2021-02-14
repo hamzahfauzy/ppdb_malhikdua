@@ -159,9 +159,9 @@
                                             <option value="-" selected disabled>- Pilih Jawaban -</option>
                                             <option value="SMP AL HIKMAH 2">SMP AL HIKMAH 2</option>
                                             <option value="MTS AL HIKMAH 2">MTS AL HIKMAH 2</option>
-                                            <option value="Madrasah Ibtida’iyah Tamrinussibyan">Madrasah Ibtida’iyah Tamrinussibyan</option>
+                                            {{-- <option value="Madrasah Ibtida’iyah Tamrinussibyan">Madrasah Ibtida’iyah Tamrinussibyan</option>
                                             <option value="TK AL HIKMAH 2">TK AL HIKMAH 2</option>
-                                            <option value="Tahfidzul Qur’an AL HIKMAH 2">Tahfidzul Qur’an AL HIKMAH 2</option>
+                                            <option value="Tahfidzul Qur’an AL HIKMAH 2">Tahfidzul Qur’an AL HIKMAH 2</option> --}}
                                         </select>
                                     </div>
                                     <div class="form-group d-none" id="sebut_nama_sekolah">

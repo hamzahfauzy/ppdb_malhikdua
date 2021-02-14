@@ -340,6 +340,7 @@ class HomeController extends Controller
         if($contact->formulir && in_array($contact->formulir->status,['Dikirim','Diterima']))
             return redirect('/home');
         if ($request->isMethod('post')) {
+            $contact->no_wa = $request->no_wa;
             if($contact->formulir)
             {
                 DB::beginTransaction();
@@ -471,6 +472,7 @@ class HomeController extends Controller
                     // something went wrong
                 }
             }
+            $contact->save();
             return redirect('/home')->with(['success'=>'Berhasil edit formulir']);
         }
         if($contact->formulir)
@@ -545,10 +547,10 @@ class HomeController extends Controller
                     'kartu_pemerintah',
                 ]
             ];
-            return view('edit-formulir',compact('formulir','labels'));
+            return view('edit-formulir',compact('formulir','labels','contact'));
         }
         else
-            return view('formulir');
+            return view('formulir',compact('contact'));
     }
 
     function send()

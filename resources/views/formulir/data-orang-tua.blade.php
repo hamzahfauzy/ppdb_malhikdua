@@ -1,8 +1,5 @@
 <h4>Data Ayah</h4>
-<div class="form-group">
-    <label for="">Nomor KK</label>
-    <input type="text" name="ayah[no_kk]" class="form-control">
-</div>
+<input type="hidden" name="ayah[no_kk]" value="0">
 <div class="form-group">
     <label for="">Nama ayah</label>
     <input type="text" name="ayah[nama]" class="form-control">
@@ -18,7 +15,7 @@
 </div>
 <div class="form-group">
     <label for="">NIK Ayah</label>
-    <input type="text" name="ayah[no_kk_ayah]" class="form-control">
+    <input type="tel" pattern="[0-9]{16}" name="ayah[no_kk_ayah]" class="form-control">
 </div>
 <div class="form-group">
     <label for="">Tanggal lahir ayah</label>
@@ -34,22 +31,56 @@
 </div>
 <div class="form-group">
     <label for="">Pekerjaan Ayah</label>
-    <input type="text" name="ayah[pekerjaan]" class="form-control">
+    <select name="ayah[pekerjaan]" class="form-control">
+        <option>tidak bekerja</option>
+        <option>pensiunan</option>
+        <option>PNS (selain poin 05 dan 10)</option>
+        <option>TNI/Polisi</option>
+        <option>Guru/dosen</option>
+        <option>pegawai swasta</option>
+        <option>wiraswasta/wirausaha</option>
+        <option>pengacara/hakim/jaksa/notaris</option>
+        <option>seniman/pelukis/artis/sejenisnya</option>
+        <option>okter/bidan/perawat</option>
+        <option>pilot/pramugara</option>
+        <option>pedagang</option>
+        <option>petani/peternak</option>
+        <option>nelayan</option>
+        <option>buruh (tani/pabrik/bangunan)</option>
+        <option>sopir/masinis/kondektur</option>
+        <option>politikus</option>
+        <option>lainnya</option>
+    </select>
 </div>
 <div class="form-group">
     <label for="">Pendidikan Ayah</label>
-    <input type="text" name="ayah[pendidikan]" class="form-control">
+    <select name="ayah[pendidikan]" class="form-control">
+        <option>Tidak berpendidikan</option>
+        <option>SD/Sederajat</option>
+        <option>SMP/Sederajat</option>
+        <option>SMA/Sederajat</option>
+        <option>D1</option>
+        <option>D2</option>
+        <option>D3</option>
+        <option>D4/S1</option>
+        <option>S2</option>
+        <option>S3</option>
+    </select>
 </div>
 <div class="form-group">
     <label for="">Penghasilan</label>
-    <input type="text" name="ayah[penghasilan]" class="form-control">
+    <select name="ayah[penghasilan]" class="form-control">
+        <option value="kurang dari Rp 500.000">kurang dari Rp 500.000</option>
+        <option value="Rp 500.000 - 1.000.000">Rp 500.000 - 1.000.000</option>
+        <option value="Rp 1.000.001 - 2.000.000">Rp 1.000.001 - 2.000.000</option>
+        <option value="Rp 2.000.001 - 3.000.000">Rp 2.000.001 - 3.000.000</option>
+        <option value="Rp 3.000.001 - 5.000.000">Rp 3.000.001 - 5.000.000</option>
+        <option value="lebih dari 5.000.000">lebih dari 5.000.000</option>
+    </select>
 </div>
 
 <h4>Data Ibu</h4>
-<div class="form-group">
-    <label for="">Nomor KK</label>
-    <input type="text" name="ibu[no_kk]" class="form-control">
-</div>
+<input type="hidden" name="ibu[no_kk]" value="0">
 <div class="form-group">
     <label for="">Nama</label>
     <input type="text" name="ibu[nama]" class="form-control">
@@ -65,7 +96,7 @@
 </div>
 <div class="form-group">
     <label for="">NIK</label>
-    <input type="text" name="ibu[no_kk_ibu]" class="form-control">
+    <input type="tel" pattern="[0-9]{16}" name="ibu[no_kk_ibu]" class="form-control">
 </div>
 <div class="form-group">
     <label for="">Tanggal lahir</label>
@@ -81,15 +112,52 @@
 </div>
 <div class="form-group">
     <label for="">Pekerjaan</label>
-    <input type="text" name="ibu[pekerjaan]" class="form-control">
+    <select name="ibu[pekerjaan]" class="form-control">
+        <option>tidak bekerja</option>
+        <option>pensiunan</option>
+        <option>PNS (selain poin 05 dan 10)</option>
+        <option>TNI/Polisi</option>
+        <option>Guru/dosen</option>
+        <option>pegawai swasta</option>
+        <option>wiraswasta/wirausaha</option>
+        <option>pengacara/hakim/jaksa/notaris</option>
+        <option>seniman/pelukis/artis/sejenisnya</option>
+        <option>okter/bidan/perawat</option>
+        <option>pilot/pramugara</option>
+        <option>pedagang</option>
+        <option>petani/peternak</option>
+        <option>nelayan</option>
+        <option>buruh (tani/pabrik/bangunan)</option>
+        <option>sopir/masinis/kondektur</option>
+        <option>politikus</option>
+        <option>lainnya</option>
+    </select>
 </div>
 <div class="form-group">
     <label for="">Pendidikan</label>
-    <input type="text" name="ibu[pendidikan]" class="form-control">
+    <select name="ibu[pendidikan]" class="form-control">
+        <option>Tidak berpendidikan</option>
+        <option>SD/Sederajat</option>
+        <option>SMP/Sederajat</option>
+        <option>SMA/Sederajat</option>
+        <option>D1</option>
+        <option>D2</option>
+        <option>D3</option>
+        <option>D4/S1</option>
+        <option>S2</option>
+        <option>S3</option>
+    </select>
 </div>
 <div class="form-group">
     <label for="">Penghasilan</label>
-    <input type="text" name="ibu[penghasilan]" class="form-control">
+    <select name="ibu[penghasilan]" class="form-control">
+        <option value="kurang dari Rp 500.000">kurang dari Rp 500.000</option>
+        <option value="Rp 500.000 - 1.000.000">Rp 500.000 - 1.000.000</option>
+        <option value="Rp 1.000.001 - 2.000.000">Rp 1.000.001 - 2.000.000</option>
+        <option value="Rp 2.000.001 - 3.000.000">Rp 2.000.001 - 3.000.000</option>
+        <option value="Rp 3.000.001 - 5.000.000">Rp 3.000.001 - 5.000.000</option>
+        <option value="lebih dari 5.000.000">lebih dari 5.000.000</option>
+    </select>
 </div>
 
 <h4>Data Wali</h4>
@@ -99,7 +167,7 @@
 </div>
 <div class="form-group">
     <label for="">NIK Wali</label>
-    <input type="text" name="wali[NIK]" class="form-control">
+    <input type="tel" pattern="[0-9]{16}" name="wali[NIK]" class="form-control">
 </div>
 <div class="form-group">
     <label for="">Hubungan dengan pendaftar</label>

@@ -3,11 +3,20 @@
     <input type="text" name="diri[nama_lengkap]" class="form-control">
 </div>
 <div class="form-group">
+    <label for="">Nomor WA (Contoh : 81234567890)</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">+62</span>
+        </div>
+        <input type="tel" pattern="^[1-9]\d*$" name="no_wa" value="{{$contact->no_wa}}" class="form-control" required>
+    </div>
+</div>
+<div class="form-group">
     <label for="">Alamat sesuai KTP</label>
     <textarea name="diri[alamat]" class="form-control" rows="5"></textarea>
 </div>
 <div class="form-group">
-    <label for="">Tempat tinggal</label>
+    <label for="">Tempat Lahir</label>
     <input type="text" name="diri[tempat_tinggal]" class="form-control">
 </div>
 <div class="form-group">
@@ -24,15 +33,15 @@
 </div>
 <div class="form-group">
     <label for="">NIK</label>
-    <input type="text" name="diri[NIK]" class="form-control">
+    <input type="tel" name="diri[NIK]" class="form-control" pattern="[0-9]{16}">
 </div>
 <div class="form-group">
     <label for="">Anak Ke</label>
-    <input type="text" name="diri[anak_ke]" class="form-control">
+    <input type="tel" name="diri[anak_ke]" class="form-control" pattern="[0-9]{16}">
 </div>
 <div class="form-group">
     <label for="">Jumlah Saudara (termasuk pendaftar)</label>
-    <input type="text" name="diri[jumlah_saudara]" class="form-control">
+    <input type="tel" name="diri[jumlah_saudara]" class="form-control"  pattern="[0-9]{16}">
 </div>
 <div class="form-group">
     <label for="">Status anak</label>

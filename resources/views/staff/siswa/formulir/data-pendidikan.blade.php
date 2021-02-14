@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="">NISN</label>
-    <input type="text" name="pendidikan[NISN]" class="form-control">
+    <input type="number" name="pendidikan[NISN]" class="form-control">
 </div>
 <div class="form-group">
     <label for="">Sekolah Asal</label>
@@ -8,7 +8,7 @@
 </div>
 <div class="form-group">
     <label for="">NPSN Sekolah Asal</label>
-    <input type="text" name="pendidikan[NPSN]" class="form-control">
+    <input type="number" name="pendidikan[NPSN]" class="form-control">
 </div>
 <div class="form-group">
     <label for="">Angkatan Lulus</label>
