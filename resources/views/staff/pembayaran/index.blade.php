@@ -56,7 +56,7 @@
                       <td>{{$contact->nama_calon_siswa}}</td>
                       <td>
                           {{$contact->tipe_pembayaran}} - {{$contact->payment_code}}<br>
-                          Rp. <b>{{number_format($contact->biaya_pembayaran)}}</b>
+                          Rp. <b>{{is_numeric($contact->biaya_pendaftaran) ? number_format($contact->biaya_pembayaran) : 0}}</b>
                       </td>
                       <td>{{$contact->tiket}}</td>
                       <td>{{$contact->status}}</td>

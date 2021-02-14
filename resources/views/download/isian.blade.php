@@ -123,7 +123,7 @@
 
                 <h3 style="margin:0;">Pedapatan rata-rata perbulan</h3>
                 <hr>
-                {{($formulir->ayah->penghasilan+$formulir->ibu->penghasilan)/2}}
+                {{$formulir->ayah->penghasilan}}
                 <br>
                 <br>
             </td>

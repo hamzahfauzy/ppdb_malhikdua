@@ -8,7 +8,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">+62</span>
         </div>
-        <input type="tel" pattern="^[1-9]\d*$" name="no_wa" value="{{$contact->no_wa}}" class="form-control" required>
+        <input type="tel" pattern="^[1-9]\d*$" name="no_wa" value="{{isset($formulir)?$formulir->contact->no_wa:''}}" class="form-control" required>
     </div>
 </div>
 <div class="form-group">
@@ -37,11 +37,11 @@
 </div>
 <div class="form-group">
     <label for="">Anak Ke</label>
-    <input type="tel" name="diri[anak_ke]" class="form-control" pattern="[0-9]{16}">
+    <input type="tel" name="diri[anak_ke]" class="form-control" pattern="[0-9]+">
 </div>
 <div class="form-group">
     <label for="">Jumlah Saudara (termasuk pendaftar)</label>
-    <input type="tel" name="diri[jumlah_saudara]" class="form-control"  pattern="[0-9]{16}">
+    <input type="tel" name="diri[jumlah_saudara]" class="form-control"  pattern="[0-9]+">
 </div>
 <div class="form-group">
     <label for="">Status anak</label>

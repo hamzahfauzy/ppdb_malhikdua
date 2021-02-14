@@ -75,14 +75,7 @@
             Pengelasan
         </label>
     </div>
-
-    <div class="form-check d-none" id="fc-desain">
-        <input class="form-check-input" type="radio" name="rencana[spesifikasi]" id="Desain" value="Desain">
-        <label class="form-check-label" for="Desain">
-            Desain
-        </label>
-    </div>
-
+    
     <div class="form-check d-none" id="fc-tb">
         <input class="form-check-input" type="radio" name="rencana[spesifikasi]" id="tb" value="Tata Busana">
         <label class="form-check-label" for="tb">

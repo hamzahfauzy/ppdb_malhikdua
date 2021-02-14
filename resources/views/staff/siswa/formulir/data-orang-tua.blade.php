@@ -175,9 +175,39 @@
 </div>
 <div class="form-group">
     <label for="">Pekerjaan</label>
-    <input type="text" name="wali[pekerjaan]" class="form-control">
+    <select name="wali[pekerjaan]" class="form-control">
+        <option>tidak bekerja</option>
+        <option>pensiunan</option>
+        <option>PNS (selain poin 05 dan 10)</option>
+        <option>TNI/Polisi</option>
+        <option>Guru/dosen</option>
+        <option>pegawai swasta</option>
+        <option>wiraswasta/wirausaha</option>
+        <option>pengacara/hakim/jaksa/notaris</option>
+        <option>seniman/pelukis/artis/sejenisnya</option>
+        <option>okter/bidan/perawat</option>
+        <option>pilot/pramugara</option>
+        <option>pedagang</option>
+        <option>petani/peternak</option>
+        <option>nelayan</option>
+        <option>buruh (tani/pabrik/bangunan)</option>
+        <option>sopir/masinis/kondektur</option>
+        <option>politikus</option>
+        <option>lainnya</option>
+    </select>
 </div>
 <div class="form-group">
     <label for="">Pendidikan</label>
-    <input type="text" name="wali[pendidikan]" class="form-control">
+    <select name="wali[pendidikan]" class="form-control">
+        <option>Tidak berpendidikan</option>
+        <option>SD/Sederajat</option>
+        <option>SMP/Sederajat</option>
+        <option>SMA/Sederajat</option>
+        <option>D1</option>
+        <option>D2</option>
+        <option>D3</option>
+        <option>D4/S1</option>
+        <option>S2</option>
+        <option>S3</option>
+    </select>
 </div>

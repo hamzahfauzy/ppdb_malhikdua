@@ -123,7 +123,7 @@ class SiswaController extends Controller
                 'nama_pendaftar' => $request->diri['nama_lengkap'],
                 'status' => 'PAID',
                 'nama_calon_siswa' => $request->diri['nama_lengkap'],
-                'no_wa' => ' ',
+                'no_wa' => $request->no_wa,
                 'email' => ' ',
                 'alumni' => ' ',
                 'sebutkan_nama_sekolah' => ' ',
@@ -146,7 +146,7 @@ class SiswaController extends Controller
                 
                 $tiket = "MDTKT".$tiket;
 
-                $nf->update(['kode_pendaftaran'=>$tiket]);
+                $nf->update(['kode_formulir'=>$tiket]);
                 $rencana = new DataRencanaSekolah();
                 $diri = new DataDiri();
                 $pendidikan = new DataPendidikan();
@@ -213,6 +213,9 @@ class SiswaController extends Controller
             $asal = $formulir->alamat_asal;
             $ayah = $formulir->ayah;
             $ibu = $formulir->ibu;
+            $contact = $formulir->contact;
+            $contact->no_wa = $request->no_wa;
+            $contact->save();
             if($formulir->wali)
                 $wali = $formulir->wali;
             else
