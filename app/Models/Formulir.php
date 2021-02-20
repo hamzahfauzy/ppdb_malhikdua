@@ -10,6 +10,46 @@ class Formulir extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    function getNomorAttribute()
+    {
+        $kode = "";
+        $rencana = $this->data_rencana_sekolah;
+        $program = $rencana->program;
+        if($program == 'Keagamaan')
+            $kode = "MAK";
+        if(in_array($program,['Olimpiade (IPA Unggulan)','Vokasi (IPA Regular)']))
+            $kode = "IPA";
+        if(in_array($program,['Olimpiade (IPS Unggulan)','Vokasi (IPS Regular)']))
+            $kode = "IPS";
+        
+        $jenis_kelamin = $this->data_diri->jenis_kelamin;
+        $gender = $jenis_kelamin == 'Perempuan' ? 'PI' : 'PA';
+
+        $siswa = Formulir::where('status','<>','')->whereHas('data_diri',function($q) use ($jenis_kelamin) {
+            $q->where('jenis_kelamin',$jenis_kelamin);
+        })->whereHas('data_rencana_sekolah',function($q) use ($kode){
+            $p = ['Keagamaan'];
+            if($kode == "IPA")
+                $p = ['Olimpiade (IPA Unggulan)','Vokasi (IPA Regular)'];
+            if($kode == "IPS")
+                $p = ['Olimpiade (IPS Unggulan)','Vokasi (IPS Regular)'];
+            $q->whereIn('program',$p);
+        })->get();
+
+        $no_urut = 0;
+        foreach($siswa as $key => $s)
+        {
+            if($s->id == $this->id)
+            {
+                $no_urut = $key+1;
+                break;
+            }
+        }
+
+        $no_urut = $no_urut < 10 ? "0".$no_urut : $no_urut;
+        return $kode.$gender.$no_urut;
+    }
     
     function alamat_asal()
     {

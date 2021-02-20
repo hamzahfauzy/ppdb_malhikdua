@@ -26,7 +26,7 @@
                 <br>
                 <h3 style="margin:0;">No Tes</h3>
                 <hr>
-                -
+                {{$formulir->nomor}}
                 <br>
                 <br>
                 <h3 style="margin:0;">Ruang Tes</h3>
