@@ -340,12 +340,16 @@ class HomeController extends Controller
         if($contact->formulir && in_array($contact->formulir->status,['Dikirim','Diterima']))
             return redirect('/home');
         if ($request->isMethod('post')) {
+            // check is whatsapp number is exists or not
+            $check_contact = Contact::where('no_wa',$request->no_wa)->where('id','<>',$contact->id)->exists();
+            if($check_contact)
+                return redirect()->back()->with('error','Nomor WA Sudah terdaftar');
             $contact->no_wa = $request->no_wa;
             if($contact->formulir)
             {
                 DB::beginTransaction();
                 try {
-                    $contact->update(['no_wa'=>$no_wa]);
+                    $contact->update(['no_wa'=>$request->no_wa]);
                     $formulir = $contact->formulir;
     
                     $rencana = $formulir->data_rencana_sekolah;
