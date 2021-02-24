@@ -25,6 +25,11 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+            @if ($msg = session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ $msg }}
+                </div>
+            @endif
             <form method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
