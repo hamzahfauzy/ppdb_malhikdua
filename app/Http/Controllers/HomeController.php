@@ -350,6 +350,7 @@ class HomeController extends Controller
                 DB::beginTransaction();
                 try {
                     $contact->update(['no_wa'=>$request->no_wa]);
+                    auth()->user()->update(['email'=>$request->no_wa]);
                     $formulir = $contact->formulir;
     
                     $rencana = $formulir->data_rencana_sekolah;

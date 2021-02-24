@@ -30,9 +30,8 @@
 <div class="form-group">
     <label for="">Kartu Pemerintah</label>
     <select name="berkas[kartu_pemerintah]" class="form-control" onchange="setUploadKartuPemerintah(this.value)">
-        <option value="-" selected disabled>- Pilih Jawaban-</option>
-        <option value="Ya">Ya</option>
         <option value="Tidak">Tidak</option>
+        <option value="Ya">Ya</option>
     </select>
 </div>
 <div class="form-group">
