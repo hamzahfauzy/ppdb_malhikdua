@@ -345,6 +345,7 @@ class HomeController extends Controller
             {
                 DB::beginTransaction();
                 try {
+                    $contact->update(['no_wa'=>$no_wa]);
                     $formulir = $contact->formulir;
     
                     $rencana = $formulir->data_rencana_sekolah;
