@@ -44,10 +44,10 @@
                 <br>
                 <h3 style="margin:0;">Rincian</h3>
                 <hr>
-                Tes seleksi Rp. 50.000<br>
+                Tes seleksi Rp. 60.000<br>
                 Mos Rp. 25.000<br>
-                Buku panduan Rp. 34.000<br>
-                Materai Rp. 6.000<br>
+                Buku panduan Rp. 35.000<br>
+                Materai Rp. 10.000<br>
                 Stopmap Rp. 5.000<br>
             </td>
         </tr>
