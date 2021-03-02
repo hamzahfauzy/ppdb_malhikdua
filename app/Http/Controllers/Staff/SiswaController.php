@@ -216,6 +216,9 @@ class SiswaController extends Controller
             $contact = $formulir->contact;
             $contact->no_wa = $request->no_wa;
             $contact->save();
+            $user = User::where('email',$request->no_wa)->first();
+            if($user)
+                $user->update(['email'=>$request->no_wa]);
             if($formulir->wali)
                 $wali = $formulir->wali;
             else
