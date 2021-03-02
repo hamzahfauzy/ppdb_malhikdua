@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Models\User;
 use App\Models\Fonnte;
 use App\Models\Contact;
 use App\Models\DataIbu;
@@ -214,9 +215,10 @@ class SiswaController extends Controller
             $ayah = $formulir->ayah;
             $ibu = $formulir->ibu;
             $contact = $formulir->contact;
+            $old_wa = $contact->no_wa;
             $contact->no_wa = $request->no_wa;
             $contact->save();
-            $user = User::where('email',$request->no_wa)->first();
+            $user = User::where('email',$old_wa)->first();
             if($user)
                 $user->update(['email'=>$request->no_wa]);
             if($formulir->wali)
