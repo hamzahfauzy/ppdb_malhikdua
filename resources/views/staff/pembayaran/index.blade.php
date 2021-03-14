@@ -28,6 +28,7 @@
           <div class="card">
             <div class="card-header">
                 <a href="{{route('staff.pembayaran.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Kirim Tiket</a>
+                <a href="{{route('staff.pembayaran.report')}}" class="btn btn-primary"><i class="fas fa-download"></i> Download Laporan</a>
             </div>
             <div class="card-body login-card-body">
               @if ($msg = session('success'))

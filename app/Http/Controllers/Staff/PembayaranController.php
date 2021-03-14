@@ -29,6 +29,14 @@ class PembayaranController extends Controller
         return view('staff.pembayaran.index',compact('contacts'));
     }
 
+    public function report()
+    {
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=Laporan-pendaftaran-".date('d-M-Y').".xls");
+        $contacts = $this->contact->orderby('created_at','desc')->get();
+        return view('staff.pembayaran.report',compact('contacts'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

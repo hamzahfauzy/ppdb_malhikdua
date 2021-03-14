@@ -36,6 +36,22 @@ class SiswaController extends Controller
         return view('staff.siswa.index', compact('siswa','labels'));
     }
 
+    public function report()
+    {
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=Laporan-siswa-".date('d-M-Y').".xls");
+        $labels = [
+            '' => '',
+            'Dikirim' => 'primary',
+            'Ditolak' => 'danger',
+            'Diterima' => 'success',
+            'Lulus' => 'success',
+            'Tidak Lulus' => 'danger',
+        ];
+        $siswa = Formulir::where('status','<>','')->get();
+        return view('staff.siswa.report', compact('siswa','labels'));
+    }
+
     public function create()
     {
         return view('staff.siswa.create');

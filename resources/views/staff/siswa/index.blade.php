@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <a href="{{route('staff.siswa.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Buat Pendaftaran</a>
-                        {{--<a href="" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>--}}
+                        <a href="{{route('staff.siswa.report')}}" class="btn btn-success"><i class="fas fa-download"></i> Laporan</a>
                     </div>
                     <div class="card-body login-card-body">
                         <table class="table table-bordered table-hover">

@@ -31,11 +31,13 @@ Route::post('duitku-callback', [App\Http\Controllers\CallbackController::class, 
 
 Route::middleware(['auth:staff'])->prefix('staff')->name('staff.')->group(function(){
     Route::get('/', [App\Http\Controllers\Staff\HomeController::class, 'index'])->name('index');
+    Route::get('pembayaran/report',[App\Http\Controllers\Staff\PembayaranController::class,'report'])->name('pembayaran.report');
     Route::resource('pembayaran', App\Http\Controllers\Staff\PembayaranController::class);
     Route::get('pembayaran/check/{contact}',[App\Http\Controllers\Staff\PembayaranController::class,'check'])->name('pembayaran.check');
     Route::get('pembayaran/approve/{contact}',[App\Http\Controllers\Staff\PembayaranController::class,'approve'])->name('pembayaran.approve');
     
     Route::get('siswa/kelulusan',[App\Http\Controllers\Staff\SiswaController::class,'kelulusan'])->name('siswa.kelulusan');
+    Route::get('siswa/report',[App\Http\Controllers\Staff\SiswaController::class,'report'])->name('siswa.report');
     Route::resource('siswa', App\Http\Controllers\Staff\SiswaController::class);
     Route::get('siswa/delete/{formulir}',[App\Http\Controllers\Staff\SiswaController::class,'delete'])->name('siswa.delete');
     Route::get('siswa/approve/{formulir}',[App\Http\Controllers\Staff\SiswaController::class,'approve'])->name('siswa.approve');
