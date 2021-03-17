@@ -49,7 +49,7 @@ class PembayaranController extends Controller
                 $contact->tiket,
                 $contact->status,
                 $contact->payment_gateway?'Online':'Offline',
-                $contact->formulir->pendidikan->sekolah_asal,
+                $contact->formulir?$contact->formulir->pendidikan->sekolah_asal:'',
                 $contact->formulir?$contact->formulir->rencana->program:''
             ]); 
             $i++;
