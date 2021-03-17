@@ -128,7 +128,7 @@
             @endforeach
         @else
         @foreach($value as $label)
-            $('[name="{{$key}}[{{$label}}]"]').val("{{$formulir->$key->$label}}")
+            $('[name="{{$key}}[{{$label}}]"]').val(`{{$formulir->$key->$label}}`)
         @endforeach
         @endif
     @endforeach
