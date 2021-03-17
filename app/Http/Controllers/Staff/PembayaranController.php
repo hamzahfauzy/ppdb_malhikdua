@@ -36,12 +36,13 @@ class PembayaranController extends Controller
         $contacts = $this->contact->orderby('created_at','desc')->get();
         // return view('staff.pembayaran.report',compact('contacts'));
         $output = fopen("php://output", "w"); 
-        fputcsv($output, array('NO', 'NAMA PENDAFTAR', 'NAMA CALON SISWA', 'PEMBAYARAN', 'JUMLAH', 'TIKET', 'STATUS', 'PENDAFTARAN', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
+        fputcsv($output, array('NO', 'NO HP','NAMA PENDAFTAR', 'NAMA CALON SISWA', 'PEMBAYARAN', 'JUMLAH', 'TIKET', 'STATUS', 'PENDAFTARAN', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
         $i = 1;
         foreach($contacts as $contact)
         {
             fputcsv($output, [
                 $i,
+                "'".$contact->no_wa,
                 $contact->nama_pendaftar,
                 $contact->nama_calon_siswa,
                 $contact->tipe_pembayaran." - ".$contact->payment_code,
