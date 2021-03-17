@@ -35,6 +35,7 @@ class PembayaranController extends Controller
         header("Content-Disposition: attachment; filename=Laporan-pendaftaran-".date('d-M-Y').".csv");
         $contacts = $this->contact->orderby('created_at','desc')->get();
         // return view('staff.pembayaran.report',compact('contacts'));
+        $output = fopen("php://output", "w"); 
         fputcsv($output, array('NO', 'NAMA PENDAFTAR', 'NAMA CALON SISWA', 'PEMBAYARAN', 'JUMLAH', 'TIKET', 'STATUS', 'PENDAFTARAN', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
         $i = 1;
         foreach($contacts as $contact)
@@ -44,7 +45,7 @@ class PembayaranController extends Controller
                 $contact->nama_pendaftar,
                 $contact->nama_calon_siswa,
                 $contact->tipe_pembayaran." - ".$contact->payment_code,
-                is_numeric($contact->biaya_pembayaran) ? number_format($contact->biaya_pembayaran) : 0,
+                is_numeric($contact->biaya_pembayaran)?number_format($contact->biaya_pembayaran) : 0,
                 $contact->tiket,
                 $contact->status,
                 $contact->payment_gateway?'Online':'Offline',
