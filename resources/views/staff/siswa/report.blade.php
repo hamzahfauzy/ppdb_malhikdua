@@ -8,6 +8,8 @@
             <th>Tempat Tinggal</th>
             <th>Tanggal Lahir</th>
             <th>Status</th>
+            <th>Sekolah Asal</th>
+            <th>Pilihan Program</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +23,8 @@
             <td>{{$s->diri->tempat_tinggal}}</td>
             <td>{{date('d-m-Y',strtotime($s->diri->tanggal_lahir))}}</td>
             <td><span class="badge badge-{{$labels[$s->status]}}">{{$s->status}}</span></td>
+            <td>{{$s->pendidikan->sekolah_asal}}</td>
+            <td>{{$s->rencana->program}}</td>
         </tr>
         <?php $i++ ?>
         @endforeach

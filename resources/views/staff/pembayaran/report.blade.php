@@ -8,6 +8,8 @@
         <td>Tiket</td>
         <td>Status</td>
         <td>Pendaftaran</td>
+        <td>Sekolah Asal</td>
+        <th>Pilihan Program</th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +25,8 @@
         <td>{{$contact->tiket}}</td>
         <td>{{$contact->status}}</td>
         <td>{{$contact->payment_gateway?'Online':'Offline'}}</td>
+        <td>{{$contact->sebutkan_sekolah_asal}}</td>
+        <th>{{$contact->formulir?$contact->formulir->rencana->program:''}}</th>
     </tr>
     @endforeach
     </tbody>
