@@ -31,10 +31,30 @@ class PembayaranController extends Controller
 
     public function report()
     {
-        header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=Laporan-pendaftaran-".date('d-M-Y').".xls");
+        header('Content-Type: text/csv; charset=utf-8'); 
+        header("Content-Disposition: attachment; filename=Laporan-pendaftaran-".date('d-M-Y').".csv");
         $contacts = $this->contact->orderby('created_at','desc')->get();
-        return view('staff.pembayaran.report',compact('contacts'));
+        // return view('staff.pembayaran.report',compact('contacts'));
+        fputcsv($output, array('NO', 'NAMA PENDAFTAR', 'NAMA CALON SISWA', 'PEMBAYARAN', 'JUMLAH', 'TIKET', 'STATUS', 'PENDAFTARAN', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
+        $i = 1;
+        foreach($contacts as $contact)
+        {
+            fputcsv($output, [
+                $i,
+                $contact->nama_pendaftar,
+                $contact->nama_calon_siswa,
+                $contact->tipe_pembayaran." - ".$contact->payment_code,
+                is_numeric($contact->biaya_pembayaran) ? number_format($contact->biaya_pembayaran) : 0,
+                $contact->tiket,
+                $contact->status,
+                $contact->payment_gateway?'Online':'Offline',
+                $contact->formulir->pendidikan->sekolah_asal,
+                $contact->formulir?$contact->formulir->rencana->program:''
+            ]); 
+            $i++;
+        }
+
+        fclose($output); 
     }
 
     /**

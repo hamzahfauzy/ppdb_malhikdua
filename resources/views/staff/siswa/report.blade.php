@@ -3,6 +3,7 @@
         <tr>
             <th>#</th>
             <th>NIK</th>
+            <th>NISN</th>
             <th>Nama Lengkap</th>
             <th>Jenis Kelamin</th>
             <th>Tempat Tinggal</th>
@@ -18,6 +19,7 @@
         <tr>
             <td>{{$i}}</td>
             <td>{{$s->diri->NIK}}</td>
+            <td>{{$s->pendidikan->NISN}}</td>
             <td>{{$s->diri->nama_lengkap}}</td>
             <td>{{$s->diri->jenis_kelamin}}</td>
             <td>{{$s->diri->tempat_tinggal}}</td>

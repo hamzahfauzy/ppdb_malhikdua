@@ -38,8 +38,8 @@ class SiswaController extends Controller
 
     public function report()
     {
-        header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=Laporan-siswa-".date('d-M-Y').".xls");
+        header('Content-Type: text/csv; charset=utf-8'); 
+        header("Content-Disposition: attachment; filename=Laporan-siswa-".date('d-M-Y').".csv");
         $labels = [
             '' => '',
             'Dikirim' => 'primary',
@@ -48,8 +48,30 @@ class SiswaController extends Controller
             'Lulus' => 'success',
             'Tidak Lulus' => 'danger',
         ];
+        $output = fopen("php://output", "w"); 
+
         $siswa = Formulir::where('status','<>','')->get();
-        return view('staff.siswa.report', compact('siswa','labels'));
+        fputcsv($output, array('NO', 'NIK', 'NISN', 'NAMA LENGKAP', 'JENIS KELAMIN', 'TEMPAT TINGGAL', 'TANGGAL LAHIR', 'STATUS', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
+        $i = 1;
+        foreach($siswa as $s)
+        {
+            fputcsv($output, [
+                $i,
+                $s->diri->NIK,
+                $s->pendidikan->NISN,
+                $s->diri->nama_lengkap,
+                $s->diri->jenis_kelamin,
+                $s->diri->tempat_tinggal,
+                date('d-m-Y',strtotime($s->diri->tanggal_lahir)),
+                $s->status,
+                $s->pendidikan->sekolah_asal,
+                $s->rencana->program
+            ]); 
+            $i++;
+        }
+
+        fclose($output); 
+        // return view('staff.siswa.report', compact('siswa','labels'));
     }
 
     public function create()
