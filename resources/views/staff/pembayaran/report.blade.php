@@ -25,7 +25,7 @@
         <td>{{$contact->tiket}}</td>
         <td>{{$contact->status}}</td>
         <td>{{$contact->payment_gateway?'Online':'Offline'}}</td>
-        <td>{{$contact->sebutkan_sekolah_asal}}</td>
+        <th>{{$contact->formulir?$contact->formulir->pendidikan->sekolah_asal:''}}</th>
         <th>{{$contact->formulir?$contact->formulir->rencana->program:''}}</th>
     </tr>
     @endforeach
