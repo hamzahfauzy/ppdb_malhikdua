@@ -57,8 +57,8 @@ class SiswaController extends Controller
         {
             fputcsv($output, [
                 $i,
-                $s->diri->NIK,
-                $s->pendidikan->NISN,
+                "'".$s->diri->NIK,
+                "'".$s->pendidikan->NISN,
                 $s->diri->nama_lengkap,
                 $s->diri->jenis_kelamin,
                 $s->diri->tempat_tinggal,
