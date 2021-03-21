@@ -24,6 +24,7 @@ Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 Route::match(['get', 'post'], 'daftar', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 // Route::match(['get', 'post'], 'tiket', [App\Http\Controllers\HomeController::class, 'tiket'])->name('formulir');
 Route::match(['get', 'post'], 'check', [App\Http\Controllers\HomeController::class, 'check'])->name('check');
+Route::get('thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
 Route::get('payment', [App\Http\Controllers\HomeController::class, 'paymentGateway'])->name('payment');
 Route::get('payment-success', [App\Http\Controllers\HomeController::class, 'paymentSuccess'])->name('payment-success');
 Route::post('tripay-callback', [App\Http\Controllers\CallbackController::class, 'tripay'])->name('tripay-callback');

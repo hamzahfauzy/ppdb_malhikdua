@@ -173,6 +173,7 @@ class HomeController extends Controller
                 $contact = new Contact();
                 $request->merge(['status'=>'']);
                 $amount = $request->domisili == 'Warga Benda' || $request->alumni == 'Ya' ? 110000 : 135000;
+                $additional_message = "";
                 // bayar dulu
                 if($request->payment_gateway == 'tripay')
                 {
@@ -216,7 +217,7 @@ class HomeController extends Controller
                         'expired_time' => $response_data['expired_time'],
                     ]);
                 }
-                else
+                elseif($request->payment_gateway == 'duitku')
                 {
                     $duitku_pay = new Duitku;
                     $result = $duitku_pay->pay($amount, $request->tipe_pembayaran, [
@@ -239,6 +240,23 @@ class HomeController extends Controller
                     ]);
 
                 }
+                else
+                {
+                    $additional_message = $request->payment_gateway == 'transfer bank' ? '\nNo. Rekening : '.getenv('NO_REKENING')." - ".getenv('NAMA_BANK')."\nA/N ".getenv('NAMA_AKUN'): "";
+                    $additional_message .= "\nMohon konfirmasi pembayaran dengan mereplay wa ini. Konfirmasi manual ini hanya berlaku utk pembayaran transfer dan OTS.";
+
+                    $request->tipe_pembayaran = $request->payment_gateway;
+                    $request->merge([
+                        'status' => '',
+                        'tiket' => '',
+                        'tipe_pembayaran' => $request->tipe_pembayaran,
+                        'payment_gateway' => $request->payment_gateway,
+                        'payment_reference' => '',
+                        'payment_code' => strtotime('now'),
+                        'checkout_url' => route('thankyou'),
+                        'expired_time' => '',
+                    ]);
+                }
 
                 if ($nc = $contact->create($request->post())) {
                     $user = new User();
@@ -253,6 +271,7 @@ class HomeController extends Controller
                         $message .= "\nID Transaksi : $contact->payment_code";
                         $message .= "\nTotal : Rp. ".number_format($contact->biaya_pembayaran);
                         $message .= "\nSilahkan melakukan pembayaran melalui $contact->tipe_pembayaran untuk mendapatkan tiket pengisian formulir PPDB.";
+                        $message .= $additional_message;
                         $message .= "\nTerima Kasih";
                         $message .= "\n\nCek Status PPDB anda di ".route('check');
 
@@ -613,5 +632,10 @@ class HomeController extends Controller
             return view('check.not-found',compact('kode'));
         }
         return view('check');
+    }
+
+    function thankyou()
+    {
+        return view('thankyou');
     }
 }

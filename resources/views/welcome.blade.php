@@ -193,17 +193,18 @@
                                         <h5>Biaya : <b id="bp">Rp125.000,00</b></h5>
                                     </div>
                                     <div class="card-body">
-                                        {{-- <div class="form-group">
-                                            <label for="">Payment Gateway</label>
-                                            <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
-                                                <option value="" selected disabled>- Pilih -</option>
-                                                <option value="duitku">DUITKU</option>
-                                                <option value="tripay">TRIPAY</option>
-                                            </select>
-                                        </div> --}}
                                         <div class="form-group">
                                             <label for="">Metode Pembayaran</label>
-                                            <input type="hidden" name="payment_gateway" value="tripay">
+                                            <select name="payment_gateway" class="form-control" onchange="showPaymentMethod(this.value)">
+                                                <option value="" selected disabled>- Pilih -</option>
+                                                <option value="transfer bank">Transfer Bank</option>
+                                                <option value="bayar dilokasi (OTS)">Bayar dilokasi (OTS)</option>
+                                                <option value="tripay">Lainnya</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group payment tripay">
+                                            <label for="">Pembayaran</label>
+                                            {{-- <input type="hidden" name="payment_gateway" value="tripay"> --}}
                                             <select name="tipe_pembayaran" class="form-control">
                                                 <option value="" selected>- Pilih -</option>
                                                 {{-- @foreach($duitku as $k => $v)
@@ -330,7 +331,10 @@
         {
             document.querySelector('[name="tipe_pembayaran"]').value = ""
             document.querySelectorAll('.payment').forEach(val => {val.style.display="none"})
-            document.querySelectorAll('.payment.'+value).forEach(val => {val.style.display="block"})
+            if(value == 'tripay')
+            {
+                document.querySelectorAll('.payment.'+value).forEach(val => {val.style.display="block"})
+            }
         }
     </script>
 </body>
