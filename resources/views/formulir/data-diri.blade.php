@@ -8,7 +8,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">+62</span>
         </div>
-        <input type="text" value="{{isset($formulir)?$formulir->contact->no_wa:''}}" class="form-control" readonly>
+        <input type="text" value="{{isset($formulir)?$formulir->contact->no_wa:''}}" name="no_wa" class="form-control" disabled="">
     </div>
 </div>
 <div class="form-group">
