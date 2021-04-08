@@ -8,7 +8,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">+62</span>
         </div>
-        <input type="tel" pattern="^[1-9]\d*$" name="no_wa" value="{{isset($formulir)?$formulir->contact->no_wa:''}}" class="form-control" required>
+        <input type="text" value="{{isset($formulir)?$formulir->contact->no_wa:''}}" class="form-control" readonly>
     </div>
 </div>
 <div class="form-group">
