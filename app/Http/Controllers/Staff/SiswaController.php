@@ -89,6 +89,7 @@ class SiswaController extends Controller
                 'tempat_tinggal',
                 'tanggal_lahir',
                 'jenis_kelamin',
+                'no_kk',
                 'NIK',
                 'anak_ke',
                 'jumlah_saudara',

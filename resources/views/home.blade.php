@@ -90,6 +90,10 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group">
+                                <label for="">No. KK</label>
+                                <p>{{$formulir->data_diri->no_kk}}</p>
+                            </div>
+                            <div class="form-group">
                                 <label for="">NIK</label>
                                 <p>{{$formulir->data_diri->NIK}}</p>
                             </div>

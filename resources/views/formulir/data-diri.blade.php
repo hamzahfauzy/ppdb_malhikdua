@@ -32,6 +32,10 @@
     </select>
 </div>
 <div class="form-group">
+    <label for="">No. KK</label>
+    <input type="tel" name="diri[no_kk]" class="form-control" pattern="[0-9]{16}">
+</div>
+<div class="form-group">
     <label for="">NIK</label>
     <input type="tel" name="diri[NIK]" class="form-control" pattern="[0-9]{16}">
 </div>
