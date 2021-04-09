@@ -151,7 +151,7 @@ class SiswaController extends Controller
                 'kartu_pemerintah',
             ]
         ];
-        $contact = $formuli->contact;
+        $contact = $formulir->contact;
         return view('staff.siswa.edit',compact('formulir','labels','contact'));
     }
 
