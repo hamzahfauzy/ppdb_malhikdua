@@ -130,7 +130,10 @@ class SiswaController extends Controller
             }
 
             foreach($s->berkas->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
 
             fputcsv($output, $data, ";"); 
             // $i++;
