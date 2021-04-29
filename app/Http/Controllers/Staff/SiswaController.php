@@ -51,23 +51,89 @@ class SiswaController extends Controller
         $output = fopen("php://output", "w"); 
 
         $siswa = Formulir::where('status','<>','')->get();
-        fputcsv($output, array('NO', 'NIK', 'NISN', 'NAMA LENGKAP', 'JENIS KELAMIN', 'TEMPAT TINGGAL', 'TANGGAL LAHIR', 'STATUS', 'SEKOLAH ASAL', 'PILIHAN PROGRAM')); 
-        $i = 1;
+        $columns_rencana_sekolah = \Schema::getColumnListing((new DataRencanaSekolah)->getTable());
+        $columns_data_diri = \Schema::getColumnListing((new DataDiri)->getTable());
+        $columns_data_pendidikan = \Schema::getColumnListing((new DataPendidikan)->getTable());
+        $columns_data_ayah = \Schema::getColumnListing((new DataAyah)->getTable());
+        $columns_data_ibu = \Schema::getColumnListing((new DataIbu)->getTable());
+        $columns_data_wali = \Schema::getColumnListing((new DataWali)->getTable());
+        $columns_data_alamat_asal = \Schema::getColumnListing((new AlamatAsal)->getTable());
+        $columns_berkas_pendaftaran = \Schema::getColumnListing((new BerkasPendaftaran)->getTable());
+
+        $columns = array_merge(
+            $columns_rencana_sekolah,
+            $columns_data_diri,
+            $columns_data_pendidikan,
+            $columns_data_ayah,
+            $columns_data_ibu,
+            $columns_data_wali,
+            $columns_data_alamat_asal,
+            $columns_berkas_pendaftaran,
+        );
+        // fputcsv($output, [
+        //     'NO', 
+        //     'NIK', 
+        //     'NISN', 
+        //     'NAMA LENGKAP', 
+        //     'JENIS KELAMIN', 
+        //     'TEMPAT TINGGAL', 
+        //     'TANGGAL LAHIR', 
+        //     'STATUS', 
+        //     'SEKOLAH ASAL', 
+        //     'PILIHAN PROGRAM'
+        // ]); 
+        fputcsv($output, $columns, ";");
+        // $i = 1;
         foreach($siswa as $s)
         {
-            fputcsv($output, [
-                $i,
-                "'".$s->diri->NIK,
-                "'".$s->pendidikan->NISN,
-                $s->diri->nama_lengkap,
-                $s->diri->jenis_kelamin,
-                $s->diri->tempat_tinggal,
-                date('d-m-Y',strtotime($s->diri->tanggal_lahir)),
-                $s->status,
-                $s->pendidikan->sekolah_asal,
-                $s->rencana->program
-            ]); 
-            $i++;
+            $data = [];
+            foreach($s->rencana->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->diri->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+            
+            foreach($s->pendidikan->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->ayah->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->ibu->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->wali->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->asal->toArray() as $value)
+            {
+                $value = $value == NULL ? 'NULL' : $value;
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+            }
+
+            foreach($s->berkas->toArray() as $value)
+                $data[] = preg_replace('~[\r\n]+~', '', $value);
+
+            fputcsv($output, $data, ";"); 
+            // $i++;
         }
 
         fclose($output); 
