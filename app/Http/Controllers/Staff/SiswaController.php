@@ -83,55 +83,79 @@ class SiswaController extends Controller
         //     'PILIHAN PROGRAM'
         // ]); 
         fputcsv($output, $columns, ";");
+
+        $nik_column = [
+            'no_kk',
+            'no_kk_ayah',
+            'no_kk_ibu',
+            'NIK',
+            'NISN',
+        ];
         // $i = 1;
         foreach($siswa as $s)
         {
             $data = [];
-            foreach($s->rencana->toArray() as $value)
+            foreach($s->rencana->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->diri->toArray() as $value)
+            foreach($s->diri->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
             
-            foreach($s->pendidikan->toArray() as $value)
+            foreach($s->pendidikan->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->ayah->toArray() as $value)
+            foreach($s->ayah->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->ibu->toArray() as $value)
+            foreach($s->ibu->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->wali->toArray() as $value)
+            foreach($s->wali->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->asal->toArray() as $value)
+            foreach($s->asal->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
-            foreach($s->berkas->toArray() as $value)
+            foreach($s->berkas->toArray() as $key => $value)
             {
                 $value = $value == NULL ? 'NULL' : $value;
+                if(in_array($key,$nik_column))
+                    $value = "\'".$value;
                 $data[] = preg_replace('~[\r\n]+~', '', $value);
             }
 
