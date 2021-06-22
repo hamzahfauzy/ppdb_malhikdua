@@ -283,22 +283,38 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="">KK</label>
+                            @if(Storage::exists($formulir->berkas_pendaftaran->upload_kk))
                             <p><a href="{{Storage::url($formulir->berkas_pendaftaran->upload_kk)}}">Download</a></p>
+                            @else
+                            <p><i>Tidak ada file</i></p>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="">Akte</label>
+                            @if(Storage::exists($formulir->berkas_pendaftaran->upload_akte))
                             <p><a href="{{Storage::url($formulir->berkas_pendaftaran->upload_akte)}}">Download</a></p>
+                            @else
+                            <p><i>Tidak ada file</i></p>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="">Ijazah</label>
+                            @if(Storage::exists($formulir->berkas_pendaftaran->upload_ijazah))
                             <p>{{$formulir->berkas_pendaftaran->no_seri_ijazah}} - <a href="{{Storage::url($formulir->berkas_pendaftaran->upload_ijazah)}}">Download</a></p>
+                            @else
+                            <p><i>Tidak ada file</i></p>
+                            @endif
                         </div>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="">SHUN</label>
+                            @if(Storage::exists($formulir->berkas_pendaftaran->upload_shun))
                             <p>{{$formulir->berkas_pendaftaran->no_seri_shun}} - <a href="{{Storage::url($formulir->berkas_pendaftaran->upload_shun)}}">Download</a></p>
+                            @else
+                            <p><i>Tidak ada file</i></p>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="">No Peserta UN</label>
